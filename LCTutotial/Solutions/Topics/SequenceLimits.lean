@@ -1,4 +1,4 @@
-import LCTutotial.Lib.TutoLib
+import LCTutotial.Library.Basic
 
 /-
 In this file we manipulate the elementary definition of limits of

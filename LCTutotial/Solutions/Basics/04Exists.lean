@@ -1,4 +1,4 @@
-import LCTutotial.Lib.TutoLib
+import LCTutotial.Library.Basic
 
 open Function
 
@@ -39,7 +39,14 @@ By definition, `a ∣ b ↔ ∃ k, b = a*k`, so you can prove `a ∣ b` using th
 -/
 
 example (a b c : ℤ) (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c := by
-  sorry
+  -- sorry
+  rcases h₁ with ⟨k, hk⟩
+  rcases h₂ with ⟨l, hl⟩
+  use k*l
+  calc c = b*l     := hl
+     _ = (a*k)*l := by rw [hk]
+     _ = a*(k*l) := by ring
+  -- sorry
 
 
 /-
@@ -49,7 +56,12 @@ We can now start combining quantifiers, using the definition
 -/
 
 example (f g : ℝ → ℝ) (h : Surjective (g ∘ f)) : Surjective g := by
-  sorry
+  -- sorry
+  intro y
+  rcases h y with ⟨w, hw⟩
+  use f w
+  exact hw
+  -- sorry
 
 /-
 ## Conjunctions
@@ -89,7 +101,17 @@ example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := b
 /- You can choose your own style in the next example. -/
 
 example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by
-  sorry
+  -- sorry
+  constructor
+  · intro h h'
+    rcases h' with ⟨hp, hq⟩
+    exact h hp hq
+  · intro h hp hq
+    apply h
+    constructor
+    · exact hp
+    · exact hq
+  -- sorry
 
 /- Of course Lean doesn't need any help to prove this kind of logical tautologies.
 This is the job of the `tauto` tactic. -/
