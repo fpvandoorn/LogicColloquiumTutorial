@@ -4,7 +4,9 @@ The Lean tutorial for Logic Colloquium 2023 will be a hands-on tutorial to learn
 
 The recommended way for this tutorial is to use Gitpod. This means that Lean will not actually be running on your computer, but on a server remotely. This requires an account on Github, Gitlab or Bitbucket.
 
-Click this button to get started: [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fpvandoorn/LogicColloquiumTutorial)
+* Click this button to get started:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fpvandoorn/LogicColloquiumTutorial)
 
 * Then login using an account on Github, Gitlab or Bitbucket, or create a new account if you don't have one yet.
 
