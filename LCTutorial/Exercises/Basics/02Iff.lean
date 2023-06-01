@@ -12,7 +12,7 @@ For instance, given a real number `a`, the lemma `sq_pos_of_pos` claims `a > 0 �
 so the proof belows apply the "function" `sq_pos_of_pos` to the assumption `ha`.
 -/
 
-example (a : ℝ) (ha : a > 0) : a^2 > 0:= by
+example (a : ℝ) (ha : a > 0) : a^2 > 0 := by
   exact sq_pos_of_pos ha
 
 /-
@@ -22,13 +22,13 @@ tactic. In the this simple example, this will sound a bit silly, but it can be v
 convenient in longer proofs.
 -/
 
-example (a : ℝ) (ha : a > 0) : a^2 > 0:= by
+example (a : ℝ) (ha : a > 0) : a^2 > 0 := by
   apply sq_pos_of_pos -- Thanks to `sq_pos_of_pos`, it suffices to prove `0 < a`
   exact ha -- this is exactly our assumption `ha`.
 
 -- Try to do the next exercise in both forward and backward reasonning style.
 
-example (a : ℝ) (ha : a > 0) : (a^2)^2 > 0:= by
+example (a : ℝ) (ha : a > 0) : (a^2)^2 > 0 := by
   sorry
 
 
