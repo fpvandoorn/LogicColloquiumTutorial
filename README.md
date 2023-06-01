@@ -2,10 +2,21 @@
 
 The Lean tutorial for Logic Colloquium 2023 will be a hands-on tutorial to learn to prove theorems in Lean.
 
-There are multiple ways to use Lean.
+The recommended way for this tutorial is to use Gitpod. This means that Lean will not actually be running on your computer, but on a server remotely. This requires an account on Github, Gitlab or Bitbucket.
 
-* The recommended way for this tutorial is to use Gitpod. This requires an account on Github, Gitlab or Bitbucket (which is free to create). Click the button below to get started!
+Click the button below to get started!
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fpvandoorn/LogicColloquiumTutorial)
+
+* Then login using an account on Github, Gitlab or Bitbucket, or create a new account if you don't have one yet.
+
+* On the "New Workspace" page, press "Continue".
+
+* Then you have to wait a minute for the remote server to download and install Lean.
+
+* Then open the file `LCTutorial/Introduction.lean`. You can do this from the file explorer, which is the left panel of the screen. If the file explorer isn't shown, you can reveal by clicking the second icon from the icon column on the left, showing two blank pages (just below the settings menu).
+
+### Other ways of using Lean
 
 * Alternatively you could use Github codespaces.
 

@@ -8,7 +8,7 @@ namespace Introduction
 Welcome to this tutorial designed to give you a glimpse of Lean in a couple of hours.
 
 First let us see what a Lean proof looks like, without trying to understand any syntactical
-detail yet. You won't have anything to tuype in this file.
+detail yet. You won't have anything to type in this file.
 You should be reading it in VSCode with it Lean 4 extension.
 
 If everything works, you currently see a panel to the right of this text with title
@@ -62,6 +62,7 @@ example (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ) (hu : seq_limit u x₀)
   apply Hf
   -- This follows from property (2) and our assumption on `n`.
   exact Hu n hn
+  -- This finishes the proof!
 
 
 /-
