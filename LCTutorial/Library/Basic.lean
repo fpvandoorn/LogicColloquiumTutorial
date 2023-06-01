@@ -7,7 +7,7 @@ import Mathlib.RingTheory.Ideal.Quotient
 import Mathlib.RingTheory.Ideal.Operations
 import Mathlib.GroupTheory.Subgroup.Basic
 
-import LCTutotial.Lib.Suggest
+import LCTutorial.Library.Suggest
 
 set_option warningAsError false
 

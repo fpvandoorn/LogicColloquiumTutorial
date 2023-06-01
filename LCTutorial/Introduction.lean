@@ -1,4 +1,4 @@
-import LCTutotial.Library.Basic
+import LCTutorial.Library.Basic
 
 namespace Introduction
 

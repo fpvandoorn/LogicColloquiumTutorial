@@ -1,4 +1,4 @@
-import LCTutotial.Library.Basic
+import LCTutorial.Library.Basic
 
 /-
 In this file we manipulate the elementary definition of limits of
@@ -43,14 +43,7 @@ like replacing |l - l| by zero in the next exercise.
 
 -- If u is constant with value l then u tends to l
 example (h : ∀ n, u n = l) : seq_limit u l := by
-  -- sorry
-  intros ε ε_pos
-  use 0
-  intros n _
-  rw [h]
-  norm_num
-  linarith
-  -- sorry
+  sorry
 
 
 /- When dealing with absolute values, we'll use lemmas:
@@ -71,14 +64,7 @@ or the primed version:
 -- Assume `l > 0`. Then `u` ts to `l` implies `u n ≥ l/2` for large enough `n`
 example (h : seq_limit u l) (hl : l > 0) :
     ∃ N, ∀ n ≥ N, u n ≥ l/2 := by
-  -- sorry
-  rcases h (l/2) (by linarith) with ⟨N ,hN⟩
-  use N
-  intros n hn
-  specialize hN n hn
-  rw [abs_le] at hN
-  linarith [hN]
-  -- sorry
+  sorry
 
 
 /-
@@ -119,25 +105,7 @@ example (hu : seq_limit u l) (hv : seq_limit v l') :
 /- Let's do something similar: the squeezing theorem. -/
 example (hu : seq_limit u l) (hw : seq_limit w l) (h : ∀ n, u n ≤ v n) (h' : ∀ n, v n ≤ w n) :
     seq_limit v l := by
-  -- sorry
-  intros ε ε_pos
-  rcases hu ε ε_pos with ⟨N, hN⟩
-  rcases hw ε ε_pos with ⟨N', hN'⟩
-  use max N N'
-  intros n hn
-  rw [ge_max_iff] at hn
-  specialize hN n (by linarith)
-  specialize hN' n (by linarith)
-  specialize h n
-  specialize h' n
-  rw [abs_le] at *
-  constructor
-  -- Here `linarith` can finish, but on paper we would write
-  calc -ε ≤ u n - l := by linarith
-      _ ≤ v n - l := by linarith
-  calc v n - l ≤ w n - l := by linarith
-      _ ≤ ε := by linarith
-  -- sorry
+  sorry
 
 
 
@@ -151,17 +119,7 @@ Recall we listed three variations on the triangle inequality at the beginning of
 -- A sequence admits at most one limit. You will be able to use that lemma in the following
 -- exercises.
 lemma uniq_limit : seq_limit u l → seq_limit u l' → l = l' := by
-  -- sorry
-  intros hl hl'
-  apply eq_of_abs_sub_le_all
-  intros ε ε_pos
-  rcases hl (ε/2) (by linarith) with ⟨N, hN⟩
-  rcases hl' (ε/2) (by linarith) with ⟨N', hN'⟩
-  calc
-    |l - l'| ≤ |l - u (max N N')| + |u (max N N') - l'| := by apply abs_sub_le
-    _        = |u (max N N') - l| + |u (max N N') - l'| := by rw [abs_sub_comm]
-    _        ≤ ε := by linarith [hN _ (le_max_left N N'), hN' _ (le_max_right N N')]
-  -- sorry
+  sorry
 
 
 
@@ -175,15 +133,7 @@ def is_seq_sup (M : ℝ) (u : ℕ → ℝ) :=
 (∀ n, u n ≤ M) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≥ M - ε
 
 example (M : ℝ) (h : is_seq_sup M u) (h' : non_decreasing u) : seq_limit u M := by
-  -- sorry
-  intros ε ε_pos
-  rcases h with ⟨inf_M, sup_M_ep⟩
-  rcases sup_M_ep ε ε_pos with ⟨n₀, hn₀⟩
-  use n₀
-  intros n hn
-  rw [abs_le]
-  constructor <;> linarith [inf_M n, h' n₀ n hn]
-  -- sorry
+  sorry
 
 /-
 We will now play with subsequences.
@@ -215,15 +165,7 @@ In the exercise, we use `∃ n ≥ N, ...` which is the abbreviation of
 /-- Extractions take arbitrarily large values for arbitrarily large
 inputs. -/
 lemma extraction_ge : extraction φ → ∀ N N', ∃ n ≥ N', φ n ≥ N := by
-  -- sorry
-  intro h N N'
-  use max N N'
-  constructor
-  apply le_max_right
-  calc
-    N ≤ max N N' := by apply le_max_left
-    _ ≤ φ (max N N') := by apply id_le_extraction' h
-  -- sorry
+  sorry
 
 /- A real number `a` is a cluster point of a sequence `u`
 if `u` has a subsequence converging to `a`.
@@ -236,56 +178,24 @@ if `u` has a subsequence converging to `a`.
 `u` arbitrarily close to `a` for arbitrarily large input. -/
 lemma near_cluster :
   cluster_point u a → ∀ ε > 0, ∀ N, ∃ n ≥ N, |u n - a| ≤ ε := by
-  -- sorry
-  intro hyp ε ε_pos N
-  rcases hyp with ⟨φ, φ_extr, hφ⟩
-  cases' hφ ε ε_pos with N' hN'
-  rcases extraction_ge φ_extr N N' with ⟨q, hq, hq'⟩
-  exact ⟨φ q, hq', hN' _ hq⟩
-  -- sorry
+  sorry
 
 
 /-- If `u` tends to `l` then its subsequences tend to `l`. -/
 lemma subseq_tendsto_of_tendsto' (h : seq_limit u l) (hφ : extraction φ) :
 seq_limit (u ∘ φ) l := by
-  -- sorry
-  intro ε ε_pos
-  cases' h ε ε_pos with N hN
-  use N
-  intro n hn
-  apply hN
-  calc
-    N ≤ n := hn
-    _ ≤ φ n := id_le_extraction' hφ n
-  -- sorry
+  sorry
 
 /-- If `u` tends to `l` all its cluster points are equal to `l`. -/
 lemma cluster_limit (hl : seq_limit u l) (ha : cluster_point u a) : a = l := by
-  -- sorry
-  rcases ha with ⟨φ, φ_extr, lim_u_φ⟩
-  have lim_u_φ' : seq_limit (u ∘ φ) l := subseq_tendsto_of_tendsto' hl φ_extr
-  exact unique_limit lim_u_φ lim_u_φ'
-  -- sorry
+  sorry
 
 /-- Cauchy_sequence sequence -/
 def CauchySequence (u : ℕ → ℝ) :=
   ∀ ε > 0, ∃ N, ∀ p q, p ≥ N → q ≥ N → |u p - u q| ≤ ε
 
 example : (∃ l, seq_limit u l) → CauchySequence u := by
-  -- sorry
-  intro hyp
-  cases' hyp with l hl
-  intro ε ε_pos
-  cases' hl (ε / 2) (by positivity) with N hN
-  use N
-  intro p q hp hq
-
-  calc
-    |u p - u q| = |u p - l + (l - u q)| := by ring_nf
-    _ ≤ |u p - l| + |l - u q| := by apply abs_add
-    _ = |u p - l| + |u q - l| := by rw [abs_sub_comm (u q) l]
-    _ ≤ ε := by linarith [hN p hp, hN q hq]
-  -- sorry
+  sorry
 
 /-
 In the next exercise, you can reuse
@@ -293,17 +203,5 @@ In the next exercise, you can reuse
 -/
 
 example (hu : CauchySequence u) (hl : cluster_point u l) : seq_limit u l := by
-  -- sorry
-  intro ε ε_pos
-  cases' hu (ε / 2) (by positivity) with N hN
-  use N
-  have clef : ∃ N' ≥ N, |u N' - l| ≤ ε / 2
-  apply near_cluster hl (ε / 2) (by positivity)
-  cases' clef with N' h
-  cases' h with hNN' hN'
-  intro n hn
-  calc
-    |u n - l| = |u n - u N' + (u N' - l)| := by ring_nf
-    _ ≤ |u n - u N'| + |u N' - l| := by apply abs_add
-    _ ≤ ε := by linarith [hN n N' hn hNN', hN']
-  -- sorry
+  sorry
+

@@ -12,8 +12,9 @@
             "**/.vscode": true,
             "**/*.olean": true
         },
-        "lean.input.leader": ",",
-        "editor.fontFamily": "'DejaVu sans mono'",
+        // "lean.input.leader": ",",
+        // "editor.fontFamily": "'DejaVu sans mono'",
+        "editor.fontFamily": "'Consolas'",
         "editor.minimap.enabled": false,
         "window.titleBarStyle": "custom",
 	"lean4.input.customTranslations": {
@@ -23,4 +24,4 @@
 		"push": "⁎"
     	}
     }
-    
+

@@ -12,7 +12,7 @@ from pathlib import Path
 inline_sorry_regex = regex.compile(r'/- inline sorry -/.*/- inline sorry -/')
 sorry_regex = regex.compile(r'(.*)-- sorry.*')
 omit_regex = regex.compile(r'(.*)-- omit.*')
-root = Path(__file__).parent/'LCTutotial'
+root = Path(__file__).parent/'LCTutorial'
 
 if __name__ == '__main__':
     for path in (root/'Solutions').glob('**/*.lean'):

@@ -7,12 +7,12 @@ def moreLeanArgs := #[
 
 def moreServerArgs := moreLeanArgs
 
-package LCTutotial where
+package LCTutorial where
   moreLeanArgs := moreLeanArgs
   moreServerArgs := moreServerArgs
 
 @[default_target]
-lean_lib LCTutotial where
+lean_lib LCTutorial where
   moreLeanArgs := moreLeanArgs
 
 require mathlib from git
