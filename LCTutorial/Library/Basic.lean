@@ -7,8 +7,6 @@ import Mathlib.RingTheory.Ideal.Quotient
 import Mathlib.RingTheory.Ideal.Operations
 import Mathlib.GroupTheory.Subgroup.Basic
 
-import LCTutorial.Library.Suggest
-
 set_option warningAsError false
 
 /-
@@ -18,6 +16,13 @@ were proved without name in previous files.
 
 macro (name := ring) "ring" : tactic =>
   `(tactic| first | ring1 | ring_nf)
+
+open Lean Parser Tactic in
+syntax (name := suggest) "suggest" (config)? (simpArgs)? (" using " (colGt term),+)? : tactic
+
+macro_rules -- todo: third argument
+| `(tactic| suggest $[$c]? $[$s]?) =>
+  `(tactic| library_search $c ? $s ? )
 
 @[app_unexpander Function.comp] def unexpandFunctionComp : Lean.PrettyPrinter.Unexpander
   | `($(_) $f:term $g:term $x:term) => `(($f ∘ $g) $x)
@@ -378,7 +383,7 @@ end Ideal
 lemma Pi.ker_ringHom {ι : Type _} {R : ι → Type _} {S : Type _} [Π i, Semiring (R i)] [Semiring S]
   (φ : Π i, S →+* R i) : RingHom.ker (Pi.ringHom φ) = ⨅ i, RingHom.ker (φ i) := by
   ext x
-  simp [RingHom.mem_ker, Ideal.mem_infᵢ, funext_iff]
+  simp [RingHom.mem_ker, Ideal.mem_iInf, funext_iff]
 
 end prelim
 

@@ -16,5 +16,5 @@ lean_lib LCTutorial where
   moreLeanArgs := moreLeanArgs
 
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4.git" @ "3fc0de82218c8e1285e478f8904a9144b3a5eccd"
+  "https://github.com/leanprover-community/mathlib4.git" @ "9a28a6c4eca9f619bbd15297e90eff63915de56e"
 
