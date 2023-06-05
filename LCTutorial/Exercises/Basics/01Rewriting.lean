@@ -12,14 +12,15 @@ so mathlib has a tactic `ring` taking care of proving equalities that follow by 
 the properties of all commutative rings.
 -/
 
-
-example (a b c : ℝ) : a * b * c = b * a * c := by
+example (a b c : ℝ) : a * b * c = b * a * c := by {
   ring
+}
 
 /- It's your turn, replace the word sorry below by a proof. -/
 
-example (a b c : ℝ) : (c * b) * a = b * (a * c) := by
+example (a b c : ℝ) : (c * b) * a = b * (a * c) := by {
   sorry
+}
 
 /- In the above two examples, take a closer look at where Lean displays parentheses.
 The `ring` tactic certainly knows about associativity of multiplication, but sometimes
@@ -29,8 +30,9 @@ that is used by the `ring` tactic when needed. Doing the next example by hand fr
 of commutative rings would actually be quite tedious.
 -/
 
-example (a b : ℝ) : (a + b)^2 = a^2 + 2*a*b + b^2 := by
+example (a b : ℝ) : (a + b)^2 = a^2 + 2*a*b + b^2 := by {
   sorry
+}
 
 /-
 ## The rewriting tactic
@@ -41,10 +43,11 @@ mathematical objects A and B are equal then, in any statement involving A, one c
 by B. This operation is called rewriting, and the Lean tactic for this is `rw`.
 Carefully step through the proof below and try to understand what is happening.
 -/
-example (a b c : ℝ) (h : a = b + c) (h' : b = d - e) : a + e = d + c := by
+example (a b c : ℝ) (h : a = b + c) (h' : b = d - e) : a + e = d + c := by {
   rw [h]
   rw [h']
   ring
+}
 
 /-
 Note the `rw` tactic changes the current goal. After the first line of the above proof,
@@ -54,9 +57,10 @@ it suffices to prove `b + c + e = d + c`."
 
 One can actually do several rewritings in one command.
 -/
-example (a b c : ℝ) (h : a = b + c) (h' : b = d - e) : a + e = d + c := by
+example (a b c : ℝ) (h : a = b + c) (h' : b = d - e) : a + e = d + c := by {
   rw [h, h']
   ring
+}
 
 /-
 Note that putting your cursor between `h` and`h'` shows you the intermediate proof state.
@@ -71,9 +75,10 @@ what is new and in red what is about to change.
 Since equality is a symmetric relation, we can also replace the right-hand side of an
 equality by the left-hand side using `←` as in the following example.
 -/
-example (a b c : ℝ) (h : a = b + c) (h' : a + e = d + c) : b + c + e = d + c := by
+example (a b c : ℝ) (h : a = b + c) (h' : a + e = d + c) : b + c + e = d + c := by {
   rw [← h]
   rw [h']
+}
 
 /-
 Whenever you see in a Lean file a symbol that you don't see on your keyboard, such as ←,
@@ -87,8 +92,9 @@ not even need to be an equality. Note also that after the second `rw` the goal b
 `d + c = d + c` and Lean immediately declares the proof is done.
 -/
 
-example (a b c : ℝ) (h : a = b + c) : (b+c)^2 - c^2 = (a+c)*(a-c) := by
+example (a b c : ℝ) (h : a = b + c) : (b+c)^2 - c^2 = (a+c)*(a-c) := by {
   sorry
+}
 
 /- ## Rewriting usual a lemma
 
