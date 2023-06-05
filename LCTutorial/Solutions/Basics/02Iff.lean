@@ -144,8 +144,9 @@ number `c` and will output a proof of `a + c ≤ b + c ↔ a ≤ b`".
 -/
 
 example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
-  calc b = 0 + b := by ring
-  _      ≤ a + b := by { rw [add_le_add_iff_right b] ; exact ha  }
+  calc
+  b = 0 + b := by ring
+  _ ≤ a + b := by { rw [add_le_add_iff_right b] ; exact ha  }
 }
 
 /-
@@ -158,8 +159,9 @@ double implication. We can access the two implications of an equivalence `h : P 
 -/
 
 example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
-  calc b = 0 + b := by ring
-  _      ≤ a + b := by exact (add_le_add_iff_right b).2 ha
+  calc
+  b = 0 + b := by ring
+  _ ≤ a + b := by exact (add_le_add_iff_right b).2 ha
 }
 
 
@@ -167,8 +169,9 @@ example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
 
 example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b := by {
   -- sorry
-  calc a = a + 0 := by ring
-  _      ≤ a + b := by exact (add_le_add_iff_left a).mpr hb
+  calc
+  a = a + 0 := by ring
+  _ ≤ a + b := by exact (add_le_add_iff_left a).2 hb
   -- sorry
 }
 
@@ -178,37 +181,39 @@ example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b := by {
 In order to prove an equivalence one can use `rw` until the
 goal is the tautology `P ↔ P`, just as one can do with equalities.
 
-One can also separately prove the two implications using the `constructor`
-tactic. As suggested by its name, this tactic has greater scope.
+One can also separately prove the two implications using the `split` tactic.
 
 At this stage we don't have a lot of smart things to prove by double implication,
 so let's see a really silly proof.
 -/
 
 example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
-  constructor
+  split
   · intro h
-    calc a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
-    _          = b^2 + 0                  := by rw [h]
-    _          = b^2                      := by ring
+    calc
+    a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
+    _     = b^2 + 0                  := by rw [h]
+    _     = b^2                      := by ring
   · intro h
-    calc (a-b)*(a+b) = a^2 - b^2  := by ring
-    _                = b^2 - b^2  := by rw [h]
-    _                = 0          := by ring
+    calc
+    (a-b)*(a+b) = a^2 - b^2  := by ring
+    _           = b^2 - b^2  := by rw [h]
+    _           = 0          := by ring
   }
 
 /- You can try it on the following easier case. -/
 
 example (a b : ℝ) : a = b ↔ b - a = 0 := by {
   -- sorry
-  constructor
+  split
   · intro h
     rw [h]
     ring
   · intro h
-    calc a = b - (b - a) := by ring
-    _      = b - 0       := by rw [h]
-    _      = b           := by ring
+    calc
+    a = b - (b - a) := by ring
+    _ = b - 0       := by rw [h]
+    _ = b           := by ring
   -- sorry
 }
 
@@ -245,7 +250,7 @@ This is the end of this file where you learned how to handle implications and
 equivalences. You learned about tactics:
 * `apply`
 * `have`
-* `constructor`
+* `split`
 * `linarith`
 
 -/

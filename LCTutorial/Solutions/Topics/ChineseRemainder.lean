@@ -48,12 +48,13 @@ lemma chineseMap_surjective [Fintype ι] {I : ι → Ideal R} (hI : ∀ i j, i �
     Function.Surjective (chineseMap I) := by {
   intro g
   choose f hf using fun i ↦ Quotient.mk_surjective (g i)
-  have key : ∀ i, ∃ e : R, Quotient.mk (I i) e = 1 ∧ ∀ j, j ≠ i → Quotient.mk (I j) e = 0 := by
+  have key : ∀ i, ∃ e : R, Quotient.mk (I i) e = 1 ∧ ∀ j, j ≠ i → Quotient.mk (I j) e = 0 := by {
     intro i
-    have hI' : ∀ j ∈ ({i} : Finset ι)ᶜ, I i + I j = 1 := by
+    have hI' : ∀ j ∈ ({i} : Finset ι)ᶜ, I i + I j = 1 := by {
       intros j hj
       apply hI
       simpa [ne_comm] using hj
+    }
     rcases Ideal.add_eq_one_iff.mp (coprime_infᵢ_of_coprime hI') with ⟨u, hu, e, he, hue⟩
     refine ⟨e, ?_, ?_⟩
     · simp [eq_sub_of_add_eq' hue, map_sub, Ideal.Quotient.eq_zero_iff_mem.mpr hu]
@@ -62,6 +63,7 @@ lemma chineseMap_surjective [Fintype ι] {I : ι → Ideal R} (hI : ∀ i j, i �
       apply Ideal.Quotient.eq_zero_iff_mem.mpr
       simp at he
       tauto
+  }
   choose e he using key
   use Quotient.mk _ (∑ i, f i*e i)
   ext i

@@ -79,8 +79,8 @@ Analogously, given `h : P ↔ Q`, the command `rcases h with ⟨hPQ, hQP⟩` wil
 assumptions `hPQ : P → Q` and `hQP : Q → P`.
 
 The `rcases` tactic operates on assumptions (or on more general expressions).
-In order to decompose the *goal*, one uses `constructor`. If the current goal is `P ∧ Q` then `constructor`
-will create two goals, one for `P` and one for `Q`. If the current goal is `P ↔ Q` then `constructor`
+In order to decompose the *goal*, one uses `split`. If the current goal is `P ∧ Q` then `split`
+will create two goals, one for `P` and one for `Q`. If the current goal is `P ↔ Q` then `split`
 will create two goals, one for `P → Q` and one for `Q → P`.
 
 The next example is a really silly proof, but our goal here is simply to give a simple example
@@ -90,12 +90,12 @@ where everything is done by hand.
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
   intro h
   rcases h with ⟨hp, hq⟩
-  constructor
+  split
   exact h hp
   exact h' hq
 }
 
-/- One can also prove a conjunction without the constructor tactic by gathering both sides
+/- One can also prove a conjunction without the split tactic by gathering both sides
 using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
 
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
@@ -108,13 +108,13 @@ example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := b
 
 example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
   -- sorry
-  constructor
+  split
   · intro h h'
     rcases h' with ⟨hp, hq⟩
     exact h hp hq
   · intro h hp hq
     apply h
-    constructor
+    split
     · exact hp
     · exact hq
   -- sorry

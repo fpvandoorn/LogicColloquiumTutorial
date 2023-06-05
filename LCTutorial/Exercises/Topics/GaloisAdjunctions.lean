@@ -13,7 +13,7 @@ and each lemma you prove there is named and can be reused to prove the next lemm
 namespace Tuto
 
 section InfSup
-variable  [PartialOrder X]
+variable [PartialOrder X]
 
 /-
 In this section, `X` is a type equiped with a partial order relation. So you have access
@@ -240,7 +240,6 @@ adjunction `(f⁎, f ^*)` between `Topology X` and `Topology Y` and use it
 to build the product topology. Of course mathlib knows all this, but we'll
 continue to build our own theory.
 -/
-
 
 @[ext]
 structure Topology (X : Type) where

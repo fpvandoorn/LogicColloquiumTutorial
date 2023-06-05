@@ -169,8 +169,6 @@ example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
 
 /- ## Calculation layout using calc
 
-*This section is optional: you can do all remaining exercises without using this section.*
-
 What is written in the above example is very far away from what we would write on
 paper. Let's now see how to get a more natural layout (and also return to using `ring`
 instead of explicit lemma invocations).
@@ -194,9 +192,8 @@ From a practical point of view, when writing such a proof, it is sometimes conve
 * write the full calculation, ending each line with ":= ?_"
 * resume tactic state update by clicking the Play icon button and fill in proofs.
 
-Also note that the alignment of the underscores is somewhat flexible but not completely
-random. Putting all of them below the c of `calc` is definitely safe. Aligning the equal
-signs and `:=` signs is useless but looks tidy.
+The underscores should be placed below the c of `calc` tactic.
+Aligning the equal signs and `:=` signs is not necessary but looks tidy.
 
 Let's do another example using this method.
 -/

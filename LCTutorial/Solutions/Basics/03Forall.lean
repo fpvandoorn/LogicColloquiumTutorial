@@ -108,7 +108,8 @@ def non_decreasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ 
 def non_increasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≥ f x₂
 
 /- Let's be very explicit and use forward reasoning first. -/
-example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) := by {
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
+    non_decreasing (g ∘ f) := by {
   -- Let x₁ and x₂ be real numbers such that x₁ ≤ x₂
   intro x₁ x₂ h
   -- Since f is non-decreasing, f x₁ ≤ f x₂.
@@ -128,7 +129,8 @@ One possible variation on the above proof is to
 use the `specialize` tactic to replace hf by its specialization to the relevant value.
  -/
 
-example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) := by {
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
+    non_decreasing (g ∘ f) := by {
   intro x₁ x₂ h
   specialize hf x₁ x₂ h
   exact hg (f x₁) (f x₂) hf
@@ -139,7 +141,8 @@ This `specialize` tactic is mostly useful for exploration, or in preparation for
 in the assumption. One can very often replace its use by using more complicated expressions
 directly involving the original assumption, as in the next variation:
 -/
-example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) := by {
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
+    non_decreasing (g ∘ f) := by {
   intro x₁ x₂ h
   exact hg (f x₁) (f x₂) (hf x₁ x₂ h)
 }
@@ -151,7 +154,8 @@ As usual with this style, we use `apply` and enjoy Lean specializing assumptions
 using so-called unification.
 -/
 
-example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) := by {
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
+    non_decreasing (g ∘ f) := by {
   -- Let x₁ and x₂ be real numbers such that x₁ ≤ x₂
   intro x₁ x₂ h
   -- We need to prove (g ∘ f) x₁ ≤ (g ∘ f) x₂.
@@ -163,7 +167,8 @@ example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : no
   exact h
 }
 
-example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) : non_increasing (g ∘ f) := by {
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) :
+    non_increasing (g ∘ f) := by {
   -- sorry
   intro x₁ x₂ h
   apply hg

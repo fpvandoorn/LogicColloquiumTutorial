@@ -17,6 +17,9 @@ were proved without name in previous files.
 macro (name := ring) "ring" : tactic =>
   `(tactic| first | ring1 | ring_nf)
 
+macro (name := split) "split" : tactic =>
+  `(tactic| constructor)
+
 open Lean Parser Tactic in
 syntax (name := suggest) "suggest" (config)? (simpArgs)? (" using " (colGt term),+)? : tactic
 
