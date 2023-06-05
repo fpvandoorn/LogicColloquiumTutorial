@@ -213,6 +213,8 @@ lemma Inf_self_le (x : X) : Inf {x' | x ≤ x'} = x := by {
 lemma Sup_le_self (x : X) : Sup {x' | x' ≤ x} = x :=
   Inf_self_le (X := OrderDual X) x
 
+/- Let us prove that `Set` forms a complete lattice. -/
+
 lemma isInfInter {Y : Type} (S : Set (Set Y)) : isInf S (⋂₀ S) := by {
   -- sorry
   intro t
@@ -225,6 +227,7 @@ lemma isInfInter {Y : Type} (S : Set (Set Y)) : isInf S (⋂₀ S) := by {
 }
 
 lemma isSupUnion {Y : Type} (S : Set (Set Y)) : isSup S (⋃₀ S) := by {
+  -- sorry
   intro t
   constructor
   · intro ht x hx
@@ -234,6 +237,7 @@ lemma isSupUnion {Y : Type} (S : Set (Set Y)) : isSup S (⋃₀ S) := by {
     apply ht
     use u
     tauto
+  -- sorry
 }
 
 instance {Y : Type} : CompleteLattice (Set Y) where
@@ -557,8 +561,8 @@ def SubgroupInf (s : Set (Subgroup G)) : Subgroup G where
 lemma SubgroupInf_carrier (s : Set (Subgroup G)) :
   (SubgroupInf s).carrier = ⋂₀ (Subgroup.carrier '' s) :=
 by simp [SubgroupInf]
-
 -- omit
+
 lemma isInf.lift [PartialOrder X] {f : Y → X} (hf : Function.Injective f) {s : Set Y} {y : Y}
   (hy : isInf (f '' s) (f y)) : @isInf Y (PartialOrder.lift f hf) s y := by {
   intro y'
@@ -572,8 +576,8 @@ lemma isInf.lift [PartialOrder X] {f : Y → X} (hf : Function.Injective f) {s :
     apply hy'
     exact Set.mem_image_of_mem f hy''
 }
--- omit
 
+-- omit
 lemma SubgroupInf_is_Inf : isInfFun (SubgroupInf : Set (Subgroup G) → Subgroup G) := by {
   -- sorry
   intro s H
