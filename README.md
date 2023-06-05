@@ -1,10 +1,17 @@
 **Welcome to the Lean tutorial for Logic Colloquium 2023!**
 
-In this tutorial you will be using Lean to prove theorems in a platform called Gitpod.
+In this tutorial you will be using Lean to prove theorems in a platform called Github Codespaces.
 Lean will not actually be running on your computer, but you will connect to a server where Lean is running remotely.
-This requires an account on either Github, Gitlab or Bitbucket, which is easy to create.
+This requires an account on either Github.
 
-* Click this button to get started:
+## Other ways of using Lean
+
+If Github Codespaces is not working for some reason, here are some other ways to interact with Lean.
+
+### Using Gitpod
+
+* Gitpod requires an account on Github, and might also require a verification of your phone number.
+  Click this button to get started:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fpvandoorn/LogicColloquiumTutorial)
 
@@ -20,13 +27,9 @@ This requires an account on either Github, Gitlab or Bitbucket, which is easy to
 
 * On the second day, choose and work on one file from the `Topics` folder.
 
-### Other ways of using Lean
+### Local installation
 
-If Gitpod is not working for some reason, here are some other ways to interact with Lean.
-
-* Alternatively you could use Github codespaces.
-
-* Alternatively you could install Lean 4.
+* Install Lean 4, download this project, run `lake exe cache get!`
 
 <!-- After reading the `Introduction.lean` file, you should read explanations and do exercises in the
 `Basics` folder, and then choose to work on one file from the `Topics` folder.
