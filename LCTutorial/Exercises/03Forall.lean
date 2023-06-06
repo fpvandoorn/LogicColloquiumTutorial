@@ -166,8 +166,7 @@ example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) :
 /-
 This is the end of this file where you learned how to handle universal quantifiers.
 You learned about tactics:
-* `intro`
 * `unfold`
 * `specialize`
-
 -/
+

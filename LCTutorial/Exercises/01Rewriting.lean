@@ -210,6 +210,6 @@ Congratulations, this is the end of your first exercise file! You've seen what t
 a Lean proof looks like and have learned about the following tactics:
 * `ring`
 * `rw`
-* `exact`
+* `assumption`
 * `calc`
 -/

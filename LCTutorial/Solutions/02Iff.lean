@@ -248,7 +248,9 @@ example (a b c d : ℝ) (hab : a ≤ b) (hcd : c ≤ d) : a + c ≤ b + d := by 
 /-
 This is the end of this file where you learned how to handle implications and
 equivalences. You learned about tactics:
+* `intro`
 * `apply`
+* `exact`
 * `have`
 * `split`
 * `linarith`

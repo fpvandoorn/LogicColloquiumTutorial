@@ -2,10 +2,60 @@ import LCTutorial.Library.Basic
 
 open Function
 
-/- # Extential quantifiers
 
-In this file, we learn how to handle the existential quantifier and the conjunction
-(ie "logical and") operator.
+/-
+## Conjunctions
+
+In this file, we learn how to handle the conjunction ("logical and") operator
+and the existential quantifier.
+
+In Lean the conjunction of two statements `P` and `Q` is denoted by `P ∧ Q`, read as "P and Q".
+
+The `rcases` tactic also decomposes a conjunction expression. For instance given an assumption
+`h : P ∧ Q`, the command `rcases h with ⟨hP, hQ⟩` will gives two new assumptions `hP : P` and `hQ : Q`.
+
+Analogously, given `h : P ↔ Q`, the command `rcases h with ⟨hPQ, hQP⟩` will gives two new
+assumptions `hPQ : P → Q` and `hQP : Q → P`.
+
+The `rcases` tactic operates on assumptions (or on more general expressions).
+In order to decompose the *goal*, one uses `split`. If the current goal is `P ∧ Q` then `split`
+will create two goals, one for `P` and one for `Q`. If the current goal is `P ↔ Q` then `split`
+will create two goals, one for `P → Q` and one for `Q → P`.
+
+The next example is a really silly proof, but our goal here is simply to give a simple example
+where everything is done by hand.
+-/
+
+example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
+  intro h
+  rcases h with ⟨hp, hq⟩
+  split
+  exact h hp
+  exact h' hq
+}
+
+/- One can also prove a conjunction without the split tactic by gathering both sides
+using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
+
+example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
+  intro h
+  rcases h with ⟨hp, hq⟩
+  exact ⟨h hp, h' hq⟩
+}
+
+/- You can choose your own style in the next example. -/
+
+example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
+  sorry
+}
+
+/- Of course Lean doesn't need any help to prove this kind of logical tautologies.
+This is the job of the `tauto` tactic, which can prove true statements in propositional logic. -/
+example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
+  tauto
+}
+
+/- # Extential quantifiers
 
 In order to prove `∃ x, P x`, we give some `x₀` using tactic `use x₀` and
 then prove `P x₀`. This `x₀` can be an object from the local context
@@ -55,60 +105,10 @@ example (f g : ℝ → ℝ) (h : Surjective (g ∘ f)) : Surjective g := by {
   sorry
 }
 
-/-
-## Conjunctions
-
-In Lean the conjunction of two statements `P` and `Q` is denoted by `P ∧ Q`, read as "P and Q".
-
-The `rcases` tactic also decomposes a conjunction expression. For instance given an assumption
-`h : P ∧ Q`, the command `rcases h with ⟨hP, hQ⟩` will gives two new assumptions `hP : P` and `hQ : Q`.
-
-Analogously, given `h : P ↔ Q`, the command `rcases h with ⟨hPQ, hQP⟩` will gives two new
-assumptions `hPQ : P → Q` and `hQP : Q → P`.
-
-The `rcases` tactic operates on assumptions (or on more general expressions).
-In order to decompose the *goal*, one uses `split`. If the current goal is `P ∧ Q` then `split`
-will create two goals, one for `P` and one for `Q`. If the current goal is `P ↔ Q` then `split`
-will create two goals, one for `P → Q` and one for `Q → P`.
-
-The next example is a really silly proof, but our goal here is simply to give a simple example
-where everything is done by hand.
--/
-
-example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
-  intro h
-  rcases h with ⟨hp, hq⟩
-  split
-  exact h hp
-  exact h' hq
-}
-
-/- One can also prove a conjunction without the split tactic by gathering both sides
-using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
-
-example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
-  intro h
-  rcases h with ⟨hp, hq⟩
-  exact ⟨h hp, h' hq⟩
-}
-
-/- You can choose your own style in the next example. -/
-
-example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
-  sorry
-}
-
-/- Of course Lean doesn't need any help to prove this kind of logical tautologies.
-This is the job of the `tauto` tactic. -/
-example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
-  tauto
-}
-
-
 /- This is the end of this file about `∃` and `∧`. You've learned about tactics
 * `rcases`
-* `use`
 * `tauto`
+* `use`
 
 This is the end of the `Basics` folder. We deliberately left out the logical or operator
 and everything around negation so that you could move as quickly as possible into
