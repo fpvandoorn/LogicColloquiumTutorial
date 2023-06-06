@@ -60,7 +60,8 @@ Installing Lean 4 on your own machine requires a few more steps, but is advised 
 ![Download](images/local1.png)
 
 * Open the folder `LogicColloquiumTutorial-master` that you just downloaded.
-* Open a terminal in this folder. On Windows it might look like this:
+* Open a terminal in this folder. How to do this depends a bit on your operating system.
+  On Windows you can do this by right-clicking an empty part of the folder, and clicking `Open in Terminal`.
 
 ![Open terminal](images/local2.png)
 
