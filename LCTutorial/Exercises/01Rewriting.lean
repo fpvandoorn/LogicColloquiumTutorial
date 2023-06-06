@@ -147,14 +147,12 @@ We can also perform rewriting in an assumption of the local context, using for i
   `rw [exp_add x y] at h`
 in order to replace `exp(x + y)` by `exp(x) * exp(y)` in assumption `h`.
 
-In the example below, we use the lemmas `mul_comm x y : x * y = y * x` and `sub_self x : x - x = 0`.
 The `exact` tactic allows you to give an explicit proof term to prove the current goal.
 -/
 
 example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
   rw [h'] at h
-  rw [mul_comm d a] at h
-  rw [sub_self] at h
+  ring at h
   -- Our assumption `h` is now exactly what we have to prove
   exact h
 }

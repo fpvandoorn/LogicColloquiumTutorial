@@ -15,18 +15,22 @@ Lemmas from that file were hidden in my course, or restating things which
 were proved without name in previous files.
 -/
 
-macro (name := ring) "ring" : tactic =>
-  `(tactic| first | ring1 | ring_nf)
-
-macro (name := split) "split" : tactic =>
-  `(tactic| constructor)
-
-open Lean Parser Tactic in
+section
+open Lean Parser Tactic
 syntax (name := suggest) "suggest" (config)? (simpArgs)? (" using " (colGt term),+)? : tactic
 
 macro_rules -- todo: third argument
-| `(tactic| suggest $[$c]? $[$s]?) =>
-  `(tactic| library_search $c ? $s ? )
+| `(tactic| suggest $[$c]? $[$s]?) => `(tactic| library_search $c ? $s ?)
+
+macro (name := ring) "ring" : tactic =>
+  `(tactic| first | ring1 | ring_nf)
+
+macro (name := ring_at) "ring" cfg:config ? loc:location : tactic =>
+  `(tactic| first | ring_nf $cfg ? $loc)
+
+macro (name := split) "split" : tactic =>
+  `(tactic| constructor)
+end
 
 @[app_unexpander Function.comp] def unexpandFunctionComp : Lean.PrettyPrinter.Unexpander
   | `($(_) $f:term $g:term $x:term) => `(($f ∘ $g) $x)
