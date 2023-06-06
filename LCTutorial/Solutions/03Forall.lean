@@ -29,7 +29,7 @@ def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 In the next proof, we also take the opportunity to introduce the
 `unfold` tactic, which simply unfolds definitions. Here this is purely
 for didactic reason, Lean doesn't need those `unfold` invocations.
-We will also use `rfl` which is a term proving equalities that are true
+We will also use the `rfl` tactic, which proves equalities that are true
 by definition (in a very strong sense), it stands for "reflexivity".
 -/
 
@@ -43,28 +43,23 @@ example (f g : ℝ → ℝ) (hf : even_fun f) (hg : even_fun g) : even_fun (f + 
   -- Let x be any real number
   intro x
   -- and let's compute
-  calc (f + g) (-x) = f (-x) + g (-x)  := rfl
+  calc (f + g) (-x) = f (-x) + g (-x)  := by rfl
   _                 = f x + g (-x)     := by rw [hf x]
   _                 = f x + g x        := by rw [hg x]
-  _                 = (f + g) x        := rfl
+  _                 = (f + g) x        := by rfl
 }
 
 
 /-
-In the preceding proof, all `unfold` lines are purely for
-psychological comfort.
+Tactics like `unfold`, `apply`, `exact`, `rfl` and `calc` will automatically unfold definitions.
+You can test this by deleting the `unfold` lines in the above example.
 
-Sometimes unfolding is necessary because we want to apply a tactic
-that operates purely on the syntactical level.
-The main such tactic is `rw`.
-
-The same property of `rw` explain why the first computation line
-is necessary, although its proof is simply `rfl`.
-Before that line, `rw hf x` won't find anything like `f (-x)` hence
-will give up.
+Tactics like `rw`, `ring` an `linarith` will generally
+not unfold definitions that appear in the goal.
+This is why the first computation line is necessary, although its proof is simply `rfl`.
+Before that line, `rw hf x` won't find anything like `f (-x)` hence will give up.
 The last line is not necessary however, since it only proves
-something that is true by definition, and is not followed by
-a `rw`.
+something that is true by definition, and is not followed by a `rw`.
 
 Also, Lean doesn't need to be told that `hf` should be specialized to
 `x` before rewriting, exactly as in the first file.
@@ -78,9 +73,9 @@ simply need to move the cursor inside the list.
 Hence we can compress the above proof to:
 -/
 
-example (f g : ℝ → ℝ) : even_fun f → even_fun g →  even_fun (f + g) := by {
+example (f g : ℝ → ℝ) : even_fun f → even_fun g → even_fun (f + g) := by {
   intro hf hg x
-  calc (f + g) (-x) = f (-x) + g (-x)  := rfl
+  calc (f + g) (-x) = f (-x) + g (-x)  := by rfl
   _                 = f x + g x        := by rw [hf, hg]
 }
 
@@ -92,7 +87,7 @@ symbol you can put your mouse cursor above the symbol and wait for one second.
 example (f g : ℝ → ℝ) (hf : even_fun f) : even_fun (g ∘ f) := by {
   -- sorry
   intro x
-  calc (g ∘ f) (-x) = g (f (-x))   := rfl
+  calc (g ∘ f) (-x) = g (f (-x))   := by rfl
   _                 = g (f x)      := by rw [hf]
   -- sorry
 }
@@ -100,7 +95,7 @@ example (f g : ℝ → ℝ) (hf : even_fun f) : even_fun (g ∘ f) := by {
 /-
 Let's have more quantifiers, and play with forward and backward reasoning.
 
-In the next definitions, note how `∀ x₁, ∀ x₂` is abreviated to `∀ x₁ x₂`.
+In the next definitions, note how `∀ x₁, ∀ x₂, ...` is abreviated to `∀ x₁ x₂, ...`.
 -/
 
 def non_decreasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≤ f x₂
@@ -126,7 +121,7 @@ We could have written `hf _ _ h` and Lean would have filled the holes denoted by
 The same remark applies to the last line.
 
 One possible variation on the above proof is to
-use the `specialize` tactic to replace hf by its specialization to the relevant value.
+use the `specialize` tactic to replace `hf` by its specialization to the relevant value.
  -/
 
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :

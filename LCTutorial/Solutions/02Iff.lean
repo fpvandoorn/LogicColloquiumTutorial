@@ -140,7 +140,8 @@ The above lemma is already in the mathematical library, under the name `add_le_a
 `add_le_add_iff_right (c : ℝ) : a + c ≤ b + c ↔ a ≤ b`
 
 This can be read as: "`add_le_add_iff_right` is a function that will take as input a real
-number `c` and will output a proof of `a + c ≤ b + c ↔ a ≤ b`".
+number `c` and will output a proof of `a + c ≤ b + c ↔ a ≤ b`". Here is an example where this lemma
+is used.
 -/
 
 example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
@@ -183,8 +184,7 @@ goal is the tautology `P ↔ P`, just as one can do with equalities.
 
 One can also separately prove the two implications using the `split` tactic.
 
-At this stage we don't have a lot of smart things to prove by double implication,
-so let's see a really silly proof.
+Here is an example.
 -/
 
 example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
@@ -201,7 +201,7 @@ example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
     _           = 0          := by ring
   }
 
-/- You can try it on the following easier case. -/
+/- You can try it yourself in this exercise. -/
 
 example (a b : ℝ) : a = b ↔ b - a = 0 := by {
   -- sorry

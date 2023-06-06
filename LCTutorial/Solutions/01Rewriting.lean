@@ -72,7 +72,8 @@ Note that putting your cursor between `h` and`h'` shows you the intermediate pro
 Note also the subtle background color change in the tactic state that show you in green
 what is new and in red what is about to change.
 
-Now try it yourself.
+Now try it yourself. Note that ring can still do calculations,
+but it doesn't use the assumptions `h` and `h'`
 -/
 
 example (a b c d : ℝ) (h : b = d + d) (h' : a = b + c) : a + b = c + 4 * d := by {
@@ -86,8 +87,9 @@ example (a b c d : ℝ) (h : b = d + d) (h' : a = b + c) : a + b = c + 4 * d := 
 
 In the previous examples, we rewrote the goal using a local assumption. But we can
 also use lemmas. For instance let us prove a lemma about exponentiation.
-Since `ring` only knows how to prove things from the axioms of rings, it doesn't know how to work
-with exponentiation. For the following lemma, we will rewrite with the lemma
+Since `ring` only knows how to prove things from the axioms of rings,
+it doesn't know how to work with exponentiation.
+For the following lemma, we will rewrite with the lemma
 `exp_add x y` twice, which is a proof that `exp(x+y) = exp(x) * exp(y)`.
 -/
 example (a b c : ℝ) : exp (a + b + c) = exp a * exp b * exp c := by {
@@ -152,7 +154,7 @@ example (a b c d : ℝ) (h : a = b + b) (h' : b = c) (h'' : a = d) : b + c = d :
 
 We can also perform rewriting in an assumption of the local context, using for instance
   `rw [exp_add x y] at h`
-in order to replace `exp(x + y)` by `exp(x)*exp(y)` in assumption `h`.
+in order to replace `exp(x + y)` by `exp(x) * exp(y)` in assumption `h`.
 
 In the example below, we use the lemmas `mul_comm x y : x * y = y * x` and `sub_self x : x - x = 0`.
 We also use the `assumption` tactic, which proves the goal if it is exactly
@@ -163,7 +165,7 @@ example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
   rw [h'] at h
   rw [mul_comm d a] at h
   rw [sub_self] at h
-  -- Our assumption `hyp` is now exactly what we have to prove
+  -- Our assumption `h` is now exactly what we have to prove
   assumption
 }
 
@@ -195,8 +197,18 @@ From a practical point of view, when writing such a proof, it is sometimes conve
 The underscores should be placed below the c of `calc` tactic.
 Aligning the equal signs and `:=` signs is not necessary but looks tidy.
 
-Let's do another example using this method.
+Let's do some exercises using `calc`.
 -/
+
+example (a b c : ℝ) (h : a = b + c) : exp (2 * a) = (exp b) ^ 2 * (exp c) ^ 2 := by {
+  calc
+  exp (2 * a) = exp (2 * (b + c))                 := by /- inline sorry -/rw [h]/- inline sorry -/
+  _           = exp ((b + b) + (c + c))           := by /- inline sorry -/ring/- inline sorry -/
+  _           = exp (b + b) * exp (c + c)         := by /- inline sorry -/rw [exp_add]/- inline sorry -/
+  _           = (exp b * exp b) * (exp c * exp c) := by /- inline sorry -/rw [exp_add, exp_add]/- inline sorry -/
+  _           = (exp b) ^ 2 * (exp c)^2           := by /- inline sorry -/ring/- inline sorry -/
+}
+
 
 example (a b c d : ℝ) (h : c = d*a + b) (h' : b = a*d) : c = 2*a*d := by {
   -- sorry

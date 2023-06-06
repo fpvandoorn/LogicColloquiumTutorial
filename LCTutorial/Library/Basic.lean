@@ -8,6 +8,9 @@ import Mathlib.RingTheory.Ideal.Operations
 import Mathlib.GroupTheory.Subgroup.Basic
 
 set_option warningAsError false
+set_option linter.unnecessarySeqFocus false
+set_option linter.unreachableTactic false
+set_option linter.unusedVariables false
 
 /-
 Lemmas from that file were hidden in my course, or restating things which

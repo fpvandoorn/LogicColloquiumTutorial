@@ -81,8 +81,9 @@ example (a b c d : ℝ) (h : b = d + d) (h' : a = b + c) : a + b = c + 4 * d := 
 
 In the previous examples, we rewrote the goal using a local assumption. But we can
 also use lemmas. For instance let us prove a lemma about exponentiation.
-Since `ring` only knows how to prove things from the axioms of rings, it doesn't know how to work
-with exponentiation. For the following lemma, we will rewrite with the lemma
+Since `ring` only knows how to prove things from the axioms of rings,
+it doesn't know how to work with exponentiation.
+For the following lemma, we will rewrite with the lemma
 `exp_add x y` twice, which is a proof that `exp(x+y) = exp(x) * exp(y)`.
 -/
 example (a b c : ℝ) : exp (a + b + c) = exp a * exp b * exp c := by {
@@ -186,8 +187,18 @@ From a practical point of view, when writing such a proof, it is sometimes conve
 The underscores should be placed below the c of `calc` tactic.
 Aligning the equal signs and `:=` signs is not necessary but looks tidy.
 
-Let's do another example using this method.
+Let's do some examples using `calc`.
 -/
+
+example (a b c : ℝ) (h : a = b + c) : exp (2 * a) = (exp b) ^ 2 * (exp c) ^ 2 := by {
+  calc
+  exp (2 * a) = exp (2 * (b + c))                 := by sorry
+  _           = exp ((b + b) + (c + c))           := by sorry
+  _           = exp (b + b) * exp (c + c)         := by sorry
+  _           = (exp b * exp b) * (exp c * exp c) := by sorry
+  _           = (exp b) ^ 2 * (exp c)^2           := by sorry
+}
+
 
 example (a b c d : ℝ) (h : c = d*a + b) (h' : b = a*d) : c = 2*a*d := by {
   sorry
