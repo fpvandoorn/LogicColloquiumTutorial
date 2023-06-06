@@ -3,12 +3,12 @@ open Set
 
 namespace PropositionalLogic
 
-/- Let's try to implement a language of propositional logic. -/
+/- Let's try to implement a language of classical propositional logic. -/
 
 def Variable : Type := ℕ
-instance : DecidableEq Variable := by { rw [Variable]; infer_instance }
 
-/- We define propositional formula, and some notation for them. -/
+/- We define propositional formula, and some notation for them. We will use a minimal propositional
+logic with only implication and falsum (`⊥`), so that proofs involve fewer steps. -/
 
 inductive Formula : Type where
   | var : Variable → Formula
@@ -21,7 +21,7 @@ open Formula
 local notation:max (priority := high) "#" x:50 => var x
 local infix:30 (priority := high) " || " => disj
 local infix:35 (priority := high) " && " => conj
-local infix:40 (priority := high) " ⇒ " => impl
+local infix:28 (priority := high) " ⇒ " => impl
 local notation (priority := high) "⊥" => bot
 
 def neg (A : Formula) : Formula := A ⇒ ⊥
@@ -29,7 +29,7 @@ local notation:(max+2) (priority := high) "~" x:max => neg x
 def top : Formula := ~⊥
 local notation (priority := high) "⊤" => top
 def equiv (A B : Formula) : Formula := (A ⇒ B) && (B ⇒ A)
-local infix:45 (priority := high) " ⇔ " => equiv
+local infix:29 (priority := high) " ⇔ " => equiv
 
 /- Let's define truth w.r.t. a valuation, i.e. classical validity -/
 
@@ -41,9 +41,9 @@ def IsTrue (v : Variable → Prop) : Formula → Prop
   | A && B => IsTrue v A ∧ IsTrue v B
   | A ⇒ B => IsTrue v A → IsTrue v B
 
-def Satisfies (v : Variable → Prop) (Γ : Set Formula) : Prop := ∀ A ∈ Γ, IsTrue v A
-def Models (Γ : Set Formula) (A : Formula) : Prop := ∀ v, Satisfies v Γ → IsTrue v A
-local infix:80 (priority := high) " ⊨ " => Models
+def Satisfies (v : Variable → Prop) (Γ : Set Formula) : Prop := ∀ {A}, A ∈ Γ → IsTrue v A
+def Models (Γ : Set Formula) (A : Formula) : Prop := ∀ {v}, Satisfies v Γ → IsTrue v A
+local infix:27 (priority := high) " ⊨ " => Models
 def Valid (A : Formula) : Prop := ∅ ⊨ A
 
 /- Here are some basic properties.
@@ -53,58 +53,57 @@ def Valid (A : Formula) : Prop := ∅ ⊨ A
 variable {v : Variable → Prop} {A B : Formula}
 @[simp] lemma isTrue_neg : IsTrue v ~A ↔ ¬ IsTrue v A := by simp
 
-@[simp] lemma isTrue_top : IsTrue v ⊤ := by
+@[simp] lemma isTrue_top : IsTrue v ⊤ := by {
   -- sorry
-  simp [IsTrue]
+  simp
   -- sorry
+}
 
-@[simp] lemma isTrue_equiv : IsTrue v (A ⇔ B) ↔ (IsTrue v A ↔ IsTrue v B) := by
+@[simp] lemma isTrue_equiv : IsTrue v (A ⇔ B) ↔ (IsTrue v A ↔ IsTrue v B) := by {
   -- sorry
   simp
   tauto
   -- sorry
+}
 
-/- As an exercise, let's prove (using classical logic) the double negation elimination principle. -/
+/- As an exercise, let's prove (using classical logic) the double negation elimination principle.
+  `by_contra h` might be useful to prove something by contradiction. -/
 
-example : Valid (~~A ⇔ A) := by
+example : Valid (~~A ⇔ A) := by {
   -- sorry
   intros v _
   simp
   tauto
   -- sorry
+}
 
-/- Let's define provability w.r.t. classical logic -/
+@[simp] lemma satisfies_insert_iff : Satisfies v (insert A Γ) ↔ IsTrue v A ∧ Satisfies v Γ := by {
+  simp [Satisfies]
+}
+
+/- Let's define provability w.r.t. classical logic. -/
 section
-set_option hygiene false in  -- hacky: allow forward reference in notation
-local notation:50 Γ " ⇐  " A => Provable Γ A
+set_option hygiene false  -- hacky: allow forward reference in notation
+local infix:27 " ⊢ " => ProvableFrom
 
--- Reserved Notation "Γ ⊢ A" (at level 80).
-inductive Provable : Set Formula → Formula → Prop
-| ax    : ∀ {Γ A},   A ∈ Γ → Provable Γ A
-| impI  : ∀ {Γ A B}, Provable (insert A Γ) B           → Provable Γ (A ⇒ B)
-| impE  : ∀ {Γ A B}, Provable Γ (A ⇒ B) → Provable Γ A → Provable Γ B
-| botC  : ∀ {Γ A},   Provable (insert ~A Γ) ⊥        → Provable Γ A
-| andI  : ∀ {Γ A B}, Provable Γ A     → Provable Γ B              → Provable Γ (A && B)
-| andE1 : ∀ {Γ A B}, Provable Γ (A && B)                        → Provable Γ A
-| andE2 : ∀ {Γ A B}, Provable Γ (A && B)                        → Provable Γ B
-| orI1  : ∀ {Γ A B}, Provable Γ A                           → Provable Γ (A || B)
-| orI2  : ∀ {Γ A B}, Provable Γ B                           → Provable Γ (A || B)
-| orE   : ∀ {Γ A B C}, Provable Γ (A || B) → Provable (insert A Γ) C → Provable (insert B Γ) C → Provable Γ C
--- | ax    : ∀ {Γ A},   A ∈ Γ   → Γ ⊢ A
--- | ImpI  : ∀ {Γ A B},  insert A Γ ⊢ B               → Γ ⊢ A → B
--- | ImpE  : ∀ {Γ A B},           Γ ⊢ A ⇒ B  → Γ ⊢ A  → Γ ⊢ B
--- | BotC  : ∀ {Γ A},   insert ~A Γ ⊢ ⊥               → Γ ⊢ A
--- | andI  : ∀ {Γ A B},           Γ ⊢ A      → Γ ⊢ B  → Γ ⊢ A && B
--- | andE1 : ∀ {Γ A B},           Γ ⊢ A && B          → Γ ⊢ A
--- | andE2 : ∀ {Γ A B},           Γ ⊢ A && B          → Γ ⊢ B
--- | orI1  : ∀ {Γ A B},           Γ ⊢ A               → Γ ⊢ A || B
--- | orI2  : ∀ {Γ A B},           Γ ⊢ B               → Γ ⊢ A || B
--- | orE   : ∀ {Γ A B C}, Γ ⊢ A || B → A::Γ ⊢ C → B::Γ ⊢ C → Γ ⊢ C
+inductive ProvableFrom : Set Formula → Formula → Prop
+  | ax    : ∀ {Γ A},   A ∈ Γ   → Γ ⊢ A
+  | impI  : ∀ {Γ A B},  insert A Γ ⊢ B                → Γ ⊢ A ⇒ B
+  | impE  : ∀ {Γ A B},           Γ ⊢ (A ⇒ B) → Γ ⊢ A  → Γ ⊢ B
+  | botC  : ∀ {Γ A},   insert ~A Γ ⊢ ⊥                → Γ ⊢ A
+  | andI  : ∀ {Γ A B},           Γ ⊢ A       → Γ ⊢ B  → Γ ⊢ A && B
+  | andE1 : ∀ {Γ A B},           Γ ⊢ A && B           → Γ ⊢ A
+  | andE2 : ∀ {Γ A B},           Γ ⊢ A && B           → Γ ⊢ B
+  | orI1  : ∀ {Γ A B},           Γ ⊢ A                → Γ ⊢ A || B
+  | orI2  : ∀ {Γ A B},           Γ ⊢ B                → Γ ⊢ A || B
+  | orE   : ∀ {Γ A B C}, Γ ⊢ A || B → insert A Γ ⊢ C → insert B Γ ⊢ C → Γ ⊢ C
+
 end
-local infix:80 (priority := high) " ⊢ " => Provable
-def IsTheorem (A : Formula) := ∅ ⊢ A
 
-export Provable (ax impI impE botC andI andE1 andE2 orI1 orI2 orE)
+local infix:80 (priority := high) " ⊢ " => ProvableFrom
+def Provable (A : Formula) := ∅ ⊢ A
+
+export ProvableFrom (ax impI impE botC andI andE1 andE2 orI1 orI2 orE)
 variable {Γ Δ : Set Formula}
 /- To practice with the proof system, let's prove the following.
   The following lemmas about insert are useful
@@ -114,7 +113,7 @@ variable {Γ Δ : Set Formula}
   insert_subset_insert : s ⊆ t → insert x s ⊆ insert x t
 ```
 -/
-example : IsTheorem (~~A ⇔ A) := by
+example : Provable (~~A ⇔ A) := by {
   -- sorry
   apply andI
   · apply impI
@@ -126,6 +125,7 @@ example : IsTheorem (~~A ⇔ A) := by
     apply impE (ax $ mem_insert _ _)
     apply ax (mem_insert_of_mem _ $ mem_insert _ _)
   -- sorry
+}
 
 /- You can prove the following using `induction` on `h`. You will want to tell Lean that you want
   to prove it for all `Δ` simultaneously using `induction h generalizing Δ`.
@@ -133,7 +133,7 @@ example : IsTheorem (~~A ⇔ A) := by
   if you don't explicitly name them.
   You can name the last inaccessible variables using for example `rename_i ih` or
   `rename_i A B h ih`. Or you can prove a particular case using `case impI ih => <proof>`. -/
-lemma weakening (h : Γ ⊢ A) (h2 : Γ ⊆ Δ) : Δ ⊢ A := by
+lemma weakening (h : Γ ⊢ A) (h2 : Γ ⊆ Δ) : Δ ⊢ A := by {
   -- sorry
   induction h generalizing Δ
   case ax => apply ax; solve_by_elim
@@ -147,54 +147,76 @@ lemma weakening (h : Γ ⊢ A) (h2 : Γ ⊆ Δ) : Δ ⊢ A := by
   case orE ih₁ ih₂ ih₃ => apply orE <;> solve_by_elim [insert_subset_insert]
   case botC ih => apply botC <;> solve_by_elim [insert_subset_insert]
   -- sorry
+}
 
 /- Use the `suggest` tactic to find the lemma that states `Γ ⊆ insert x Γ`.
   You can click the blue suggestion in the right panel to automatically apply the suggestion. -/
 
-lemma Provable.insert (h : Γ ⊢ A) : insert B Γ ⊢ A := by
+lemma ProvableFrom.insert (h : Γ ⊢ A) : insert B Γ ⊢ A := by {
   -- sorry
   apply weakening h
   -- use `suggest` here
   exact subset_insert B Γ
   -- sorry
+}
 
 /- Proving the deduction theorem is now easy. -/
-lemma deduction_theorem (h : Γ ⊢ A) : insert (A ⇒ B) Γ ⊢ B := by
+lemma deduction_theorem (h : Γ ⊢ A) : insert (A ⇒ B) Γ ⊢ B := by {
   -- sorry
   intros
-  apply impE (ax (mem_insert _ _))
+  apply impE (ax $ mem_insert _ _)
   exact h.insert
   -- sorry
+}
 
 
-lemma IsTheorem.mp (h1 : IsTheorem (A ⇒ B)) (h2 : Γ ⊢ A) : Γ ⊢ B := by
+lemma Provable.mp (h1 : Provable (A ⇒ B)) (h2 : Γ ⊢ A) : Γ ⊢ B := by {
   -- sorry
   apply impE _ h2
   apply weakening h1
   -- suggest
   exact empty_subset Γ
   -- sorry
+}
 
-theorem soundness_theorem (h : Γ ⊢ A) : Γ ⊨ A := by
+/-- It might be useful -/
+theorem soundness_theorem (h : Γ ⊢ A) : Γ ⊨ A := by {
   -- sorry
   induction h <;> intros v hv
   solve_by_elim
-  simp
+  case impI ih => intro hA; apply ih; simp [*]
+  case impE ih₁ ih₂ => exact ih₁ hv (ih₂ hv)
+  case botC ih => by_contra hA; apply ih (satisfies_insert_iff.mpr ⟨by exact hA, hv⟩)
+  case andI ih₁ ih₂ => exact ⟨ih₁ hv, ih₂ hv⟩
+  case andE1 ih => exact (ih hv).1
+  case andE2 ih => exact (ih hv).2
+  case orI1 ih => exact .inl (ih hv)
+  case orI2 ih => exact .inr (ih hv)
+  case orE ih₁ ih₂ ih₃ => refine (ih₁ hv).elim (fun hA => ih₂ ?_) (fun hB => ih₃ ?_) <;> simp [*]
   -- sorry
+}
 
-Theorem Soundness_general : forall A Γ, Γ ⊢ A → Γ ⊨ A.
-intros A Γ H0 v;induction H0;simpl;intros;auto;
- try simpl in IHNc;try simpl in IHNc1;try simpl in IHNc2;
-  case_bool v A;try (case_bool v B;fail);
-   try (apply IHNc||apply IHNc2;prove_satisfaction);
-    case_bool v B;apply IHNc3;prove_satisfaction.
-Qed.
+theorem valid_of_provable (h : Provable A) : Valid A := by {
+  -- sorry
+  exact soundness_theorem h
+  -- sorry
+}
 
-Theorem Soundness : Prop_Soundness.
-intros ? ? ? ?;eapply Soundness_general;eassumption.
-Qed.
+/-
+  As a much longer project, you can now try some other projects.
 
-End sound_mod.
+  1. Prove completeness: if a formula is valid, then it is provable
+  Here is one possible strategy for this proof:
+  * If a formula is valid, then so is its negation normal form (NNF);
+  * If a formula in NNF is valid, then so is its conjunctive normal form (CNF);
+  * If a formula in CNF is valid then it is syntactically valid:
+      all its clauses contain both `A` and `¬ A` in it for some `A` (or contain `⊤`);
+  * If a formula in CNF is syntactically valid, then its provable;
+  * If the CNF of a formula in NNF is provable, then so is the formula itself.
+  * If the NNF of a formula is provable, then so is the formula itself.
 
+  2. Define Kripke semantics and provability for constructive propositional logic,
+    and prove soundness (or even completeness) for constructive propositional logic.
+-/
 
 end PropositionalLogic

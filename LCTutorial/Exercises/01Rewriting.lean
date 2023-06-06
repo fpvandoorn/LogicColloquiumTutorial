@@ -70,7 +70,8 @@ Note that putting your cursor between `h` and`h'` shows you the intermediate pro
 Note also the subtle background color change in the tactic state that show you in green
 what is new and in red what is about to change.
 
-Now try it yourself.
+Now try it yourself. Note that ring can still do calculations,
+but it doesn't use the assumptions `h` and `h'`
 -/
 
 example (a b c d : ℝ) (h : b = d + d) (h' : a = b + c) : a + b = c + 4 * d := by {
@@ -144,7 +145,7 @@ example (a b c d : ℝ) (h : a = b + b) (h' : b = c) (h'' : a = d) : b + c = d :
 
 We can also perform rewriting in an assumption of the local context, using for instance
   `rw [exp_add x y] at h`
-in order to replace `exp(x + y)` by `exp(x)*exp(y)` in assumption `h`.
+in order to replace `exp(x + y)` by `exp(x) * exp(y)` in assumption `h`.
 
 In the example below, we use the lemmas `mul_comm x y : x * y = y * x` and `sub_self x : x - x = 0`.
 We also use the `assumption` tactic, which proves the goal if it is exactly
@@ -155,7 +156,7 @@ example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
   rw [h'] at h
   rw [mul_comm d a] at h
   rw [sub_self] at h
-  -- Our assumption `hyp` is now exactly what we have to prove
+  -- Our assumption `h` is now exactly what we have to prove
   assumption
 }
 
@@ -187,7 +188,7 @@ From a practical point of view, when writing such a proof, it is sometimes conve
 The underscores should be placed below the c of `calc` tactic.
 Aligning the equal signs and `:=` signs is not necessary but looks tidy.
 
-Let's do some examples using `calc`.
+Let's do some exercises using `calc`.
 -/
 
 example (a b c : ℝ) (h : a = b + c) : exp (2 * a) = (exp b) ^ 2 * (exp c) ^ 2 := by {
