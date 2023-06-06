@@ -5,6 +5,9 @@ namespace Introduction
 /-
 # Introduction to this tutorial
 
+If you have a small screen, you can press
+`alt-Z` (or `option-Z`) to enable word wrap.
+
 Welcome to this tutorial designed to give you a glimpse of Lean in a couple of hours.
 
 First let us see what a Lean proof looks like, without trying to understand any syntactical
@@ -13,6 +16,7 @@ detail yet. You won't have to type anything in this file.
 If everything works, you currently see a panel to the right of this text with title
 "Lean Infoview", with a message like "No info found."
 This panel will start displaying interesting things inside the proof.
+
 First let us review two calculus definitions.
 -/
 
