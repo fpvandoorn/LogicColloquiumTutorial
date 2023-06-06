@@ -49,7 +49,8 @@ def Models (Γ : Set Formula) (A : Formula) : Prop := ∀ {v}, Satisfies v Γ �
 local infix:27 (priority := high) " ⊨ " => Models
 def Valid (A : Formula) : Prop := ∅ ⊨ A
 
-/- Here are some basic properties.
+/- Here are some basic properties of validity.
+
   The tactic `simp` will automatically simplify definitions tagged with `@[simp]` and rewrite
   using theorems tagged with `@[simp]`. -/
 

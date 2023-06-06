@@ -2,7 +2,6 @@ import LCTutorial.Library.Basic
 
 open Function
 
-
 /-
 ## Conjunctions
 
@@ -11,39 +10,34 @@ and the existential quantifier.
 
 In Lean the conjunction of two statements `P` and `Q` is denoted by `P ∧ Q`, read as "P and Q".
 
-The `rcases` tactic also decomposes a conjunction expression. For instance given an assumption
-`h : P ∧ Q`, the command `rcases h with ⟨hP, hQ⟩` will gives two new assumptions `hP : P` and `hQ : Q`.
+We can use a conjunction similarly to the `↔`:
+* If `h : P ∧ Q` then `h.1 : P` and `h.2 : Q`.
+* To prove `P ∧ Q` use the `split` tactic.
 
-Analogously, given `h : P ↔ Q`, the command `rcases h with ⟨hPQ, hQP⟩` will gives two new
-assumptions `hPQ : P → Q` and `hQP : Q → P`.
-
-The `rcases` tactic operates on assumptions (or on more general expressions).
-In order to decompose the *goal*, one uses `split`. If the current goal is `P ∧ Q` then `split`
-will create two goals, one for `P` and one for `Q`. If the current goal is `P ↔ Q` then `split`
-will create two goals, one for `P → Q` and one for `Q → P`.
-
-The next example is a really silly proof, but our goal here is simply to give a simple example
-where everything is done by hand.
+Furthermore, we can decompose conjunction and equivalences.
+* If `h : P ∧ Q`, the tactic `rcases h with ⟨hP, hQ⟩`
+  gives two new assumptions `hP : P` and `hQ : Q`.
+* If `h : P ↔ Q`, the tactic `rcases h with ⟨hPQ, hQP⟩`
+  gives two new assumptions `hPQ : P → Q` and `hQP : Q → P`.
 -/
 
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
-  intro h
-  rcases h with ⟨hp, hq⟩
+  intro hpq
+  rcases hpq with ⟨hp, hq⟩
   split
-  exact h hp
-  exact h' hq
+  · exact h hp
+  · exact h' hq
 }
 
 /- One can also prove a conjunction without the split tactic by gathering both sides
 using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
 
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
-  intro h
-  rcases h with ⟨hp, hq⟩
-  exact ⟨h hp, h' hq⟩
+  intro hpq
+  exact ⟨h hpq.1, h' hpq.2⟩
 }
 
-/- You can choose your own style in the next example. -/
+/- You can choose your own style in the next exercise. -/
 
 example (p q r : Prop) : (p → (q → r)) ↔ p ∧ q → r := by {
   sorry
@@ -112,13 +106,7 @@ example (f g : ℝ → ℝ) (h : Surjective (g ∘ f)) : Surjective g := by {
 
 This is the end of the `Basics` folder. We deliberately left out the logical or operator
 and everything around negation so that you could move as quickly as possible into
-actual mathematical content. You now get to choose one file from the `Topics` folder.
+actual mathematical content. You now get to choose one file from the `Topics`.
 
-The most elementary option is to work on `SequenceLimit`. It is also the most relevant file
-if you are interested in undergrad teaching using Lean.
-
-If this isn't abstract enough, you should probably go `GaloisAjunctions` which is about
-the most elementary version of abstract non-sense, playing with adjunctions between
-complete lattices. That file ends with a constructor of the product topology and its
-universal property manipulating as few open sets as possible.
- -/
+See the bottom of `03Forall` for descriptions of the choices.
+-/

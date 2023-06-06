@@ -126,8 +126,8 @@ is used.
 
 example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
   calc
-  b = 0 + b := by ring
-  _ ≤ a + b := by { rw [add_le_add_iff_right b] ; exact ha  }
+    b = 0 + b := by ring
+    _ ≤ a + b := by { rw [add_le_add_iff_right b] ; exact ha  }
 }
 
 /-
@@ -141,8 +141,8 @@ double implication. We can access the two implications of an equivalence `h : P 
 
 example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by {
   calc
-  b = 0 + b := by ring
-  _ ≤ a + b := by exact (add_le_add_iff_right b).2 ha
+    b = 0 + b := by ring
+    _ ≤ a + b := by exact (add_le_add_iff_right b).2 ha
 }
 
 
@@ -167,14 +167,14 @@ example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
   split
   · intro h
     calc
-    a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
-    _     = b^2 + 0                  := by rw [h]
-    _     = b^2                      := by ring
+      a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
+      _     = b^2 + 0                  := by rw [h]
+      _     = b^2                      := by ring
   · intro h
     calc
-    (a-b)*(a+b) = a^2 - b^2  := by ring
-    _           = b^2 - b^2  := by rw [h]
-    _           = 0          := by ring
+      (a-b)*(a+b) = a^2 - b^2  := by ring
+      _           = b^2 - b^2  := by rw [h]
+      _           = 0          := by ring
   }
 
 /- You can try it yourself in this exercise. -/

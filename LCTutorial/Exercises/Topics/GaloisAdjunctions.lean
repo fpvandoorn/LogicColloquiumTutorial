@@ -24,10 +24,6 @@ to lemmas:
 
 Curly braces around arguments mean these arguments are implicits, Lean will infer
 those arguments from context.
-
-If you need to see a definition, say for `lowerBounds` below, you can open the contextual
-menu by right-clicking on a word and then select "Go to definition", or you can simply
-Ctrl-click on the word.
 -/
 
 /-- An element `x₀` is an infimum of a set `s` in `X` if every element

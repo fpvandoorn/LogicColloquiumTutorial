@@ -1,4 +1,8 @@
 import LCTutorial.Library.Basic
+import Mathlib.Topology.Algebra.Order.IntermediateValue
+import Mathlib.Topology.Instances.Real
+
+open Function
 
 namespace Forall
 /- # Universal quantifiers
@@ -43,10 +47,11 @@ example (f g : ℝ → ℝ) (hf : even_fun f) (hg : even_fun g) : even_fun (f + 
   -- Let x be any real number
   intro x
   -- and let's compute
-  calc (f + g) (-x) = f (-x) + g (-x)  := by rfl
-  _                 = f x + g (-x)     := by rw [hf x]
-  _                 = f x + g x        := by rw [hg x]
-  _                 = (f + g) x        := by rfl
+  calc
+    (f + g) (-x) = f (-x) + g (-x)  := by rfl
+    _            = f x + g (-x)     := by rw [hf x]
+    _            = f x + g x        := by rw [hg x]
+    _            = (f + g) x        := by rfl
 }
 
 
@@ -75,8 +80,9 @@ Hence we can compress the above proof to:
 
 example (f g : ℝ → ℝ) : even_fun f → even_fun g → even_fun (f + g) := by {
   intro hf hg x
-  calc (f + g) (-x) = f (-x) + g (-x)  := by rfl
-  _                 = f x + g x        := by rw [hf, hg]
+  calc
+    (f + g) (-x) = f (-x) + g (-x)  := by rfl
+    _            = f x + g x        := by rw [hf, hg]
 }
 
 /-
@@ -138,7 +144,6 @@ example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
   exact hg (f x₁) (f x₂) (hf x₁ x₂ h)
 }
 
-
 /-
 Let's see how backward reasoning would look like here.
 As usual with this style, we use `apply` and enjoy Lean specializing assumptions for us
@@ -163,10 +168,51 @@ example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) :
   sorry
 }
 
+/- # Finding lemmas
+
+Lean's mathematical library contains many useful facts,
+and remembering all of them my name is infeasible.
+The following exercises teach you two such techniques.
+* `simp` will simplify complicated expressions.
+* `suggest` will find lemmas from the library.
+-/
+
+/- Use `simp` to prove the following. Note that `X : Set ℝ`
+means that `X` is a set containing (only) real numbers. -/
+example (x : ℝ) (X Y : Set ℝ) (hx : x ∈ X) : x ∈ (X ∩ Y) ∪ (X \ Y) := by {
+  sorry
+}
+
+/- Use `suggest` to find the lemma that every continuous function with compact support
+has a global minimum. -/
+
+example (f : ℝ → ℝ) (hf : Continuous f) (h2f : HasCompactSupport f) : ∃ x, ∀ y, f x ≤ f y := by {
+  sorry
+}
+
 /-
 This is the end of this file where you learned how to handle universal quantifiers.
 You learned about tactics:
 * `unfold`
 * `specialize`
+* `simp`
+* `suggest`
+
+You now have a choice what to do next. There is one more basic file `04Exists`
+about the existential quantifier and conjunctions. You can do that now,
+or dive directly in one of the specialized files.
+In the latter case, you should come back to `04Exists` if you get stuck on anything with `∃`/`∧`.
+
+You can start with specialized files in the `Topics` folder. You have choice between
+* `ClassicalPropositionalLogic` (easier, logic) if you want to learn
+  how to do classical propositional logic in Lean.
+* `IntuitionisticPropositionalLogic` (harder, logic) if you want a bigger challenge
+  and do intuitionistic propositional logic.
+* `SequenceLimit` (easier, math) if you want to do some elementary calculus.
+  For this file it is recommended to do `04Exists` first.
+* `GaloisAjunctions` (harder, math) if you want some more abstraction
+  and learn how to prove things about adjunctions between complete lattices.
+  It ends with a constructor of the product topology and its universal property
+  manipulating as few open sets as possible.
 -/
 
