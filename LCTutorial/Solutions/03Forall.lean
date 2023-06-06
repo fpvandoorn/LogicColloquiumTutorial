@@ -49,9 +49,9 @@ example (f g : ℝ → ℝ) (hf : even_fun f) (hg : even_fun g) : even_fun (f + 
   -- and let's compute
   calc
     (f + g) (-x) = f (-x) + g (-x)  := by rfl
-    _            = f x + g (-x)     := by rw [hf x]
-    _            = f x + g x        := by rw [hg x]
-    _            = (f + g) x        := by rfl
+               _ = f x + g (-x)     := by rw [hf x]
+               _ = f x + g x        := by rw [hg x]
+               _ = (f + g) x        := by rfl
 }
 
 
@@ -82,7 +82,7 @@ example (f g : ℝ → ℝ) : even_fun f → even_fun g → even_fun (f + g) := 
   intro hf hg x
   calc
     (f + g) (-x) = f (-x) + g (-x)  := by rfl
-    _            = f x + g x        := by rw [hf, hg]
+               _ = f x + g x        := by rw [hf, hg]
 }
 
 /-
@@ -95,7 +95,7 @@ example (f g : ℝ → ℝ) (hf : even_fun f) : even_fun (g ∘ f) := by {
   intro x
   calc
     (g ∘ f) (-x) = g (f (-x))   := by rfl
-    _            = g (f x)      := by rw [hf]
+               _ = g (f x)      := by rw [hf]
   -- sorry
 }
 

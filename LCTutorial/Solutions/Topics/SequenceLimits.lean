@@ -137,10 +137,10 @@ example (hu : seq_limit u l) (hw : seq_limit w l) (h : ∀ n, u n ≤ v n) (h' :
   -- Here `linarith` can finish, but on paper we would write
   calc
     -ε ≤ u n - l := by linarith
-    _  ≤ v n - l := by linarith
+     _ ≤ v n - l := by linarith
   calc
     v n - l ≤ w n - l := by linarith
-    _       ≤ ε := by linarith
+          _ ≤ ε := by linarith
   -- sorry
 }
 
@@ -164,8 +164,8 @@ lemma uniq_limit : seq_limit u l → seq_limit u l' → l = l' := by {
   rcases hl' (ε/2) (by linarith) with ⟨N', hN'⟩
   calc
     |l - l'| ≤ |l - u (max N N')| + |u (max N N') - l'| := by apply abs_sub_le
-    _        = |u (max N N') - l| + |u (max N N') - l'| := by rw [abs_sub_comm]
-    _        ≤ ε := by linarith [hN _ (le_max_left N N'), hN' _ (le_max_right N N')]
+           _ = |u (max N N') - l| + |u (max N N') - l'| := by rw [abs_sub_comm]
+           _ ≤ ε := by linarith [hN _ (le_max_left N N'), hN' _ (le_max_right N N')]
   -- sorry
 }
 

@@ -168,13 +168,13 @@ example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
   · intro h
     calc
       a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
-      _     = b^2 + 0                  := by rw [h]
-      _     = b^2                      := by ring
+          _ = b^2 + 0                  := by rw [h]
+          _ = b^2                      := by ring
   · intro h
     calc
       (a-b)*(a+b) = a^2 - b^2  := by ring
-      _           = b^2 - b^2  := by rw [h]
-      _           = 0          := by ring
+                _ = b^2 - b^2  := by rw [h]
+                _ = 0          := by ring
   }
 
 /- You can try it yourself in this exercise. -/
