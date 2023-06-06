@@ -69,7 +69,6 @@ example (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ) (hu : seq_limit u x₀)
   }
 
 /-
-Now that this proof is over, you can use the file explorer to the left of this panel to
-open the first file of the `Exercises/Basics` folder. If the file explorer isn't shown, you
-can reveal by clicking the topmost icon from the icon column on the left.
+Now that this proof is over, you can use the file explorer to the
+left of this panel to open the file `Exercises > 01Rewriting.lean`.
 -/
