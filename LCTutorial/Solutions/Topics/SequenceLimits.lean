@@ -73,7 +73,7 @@ or the primed version:
 example (h : seq_limit u l) (hl : l > 0) :
     ∃ N, ∀ n ≥ N, u n ≥ l/2 := by {
   -- sorry
-  rcases h (l/2) (by linarith) with ⟨N ,hN⟩
+  rcases h (l/2) (by linarith) with ⟨N, hN⟩
   use N
   intros n hn
   specialize hN n hn
@@ -135,10 +135,12 @@ example (hu : seq_limit u l) (hw : seq_limit w l) (h : ∀ n, u n ≤ v n) (h' :
   rw [abs_le] at *
   constructor
   -- Here `linarith` can finish, but on paper we would write
-  calc -ε ≤ u n - l := by linarith
-      _ ≤ v n - l := by linarith
-  calc v n - l ≤ w n - l := by linarith
-      _ ≤ ε := by linarith
+  calc
+    -ε ≤ u n - l := by linarith
+    _  ≤ v n - l := by linarith
+  calc
+    v n - l ≤ w n - l := by linarith
+    _       ≤ ε := by linarith
   -- sorry
 }
 

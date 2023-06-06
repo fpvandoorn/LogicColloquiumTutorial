@@ -24,10 +24,6 @@ to lemmas:
 
 Curly braces around arguments mean these arguments are implicits, Lean will infer
 those arguments from context.
-
-If you need to see a definition, say for `lowerBounds` below, you can open the contextual
-menu by right-clicking on a word and then select "Go to definition", or you can simply
-Ctrl-click on the word.
 -/
 
 /-- An element `x₀` is an infimum of a set `s` in `X` if every element
@@ -490,18 +486,18 @@ lemma ContinuousProductTopIff {ι : Type} {X : ι → Type} (T : Π i, Topology 
     Continuous TZ (ProductTopology T) f ↔ ∀ i,  Continuous TZ (T i) (fun z ↦ f z i) := by {
   -- sorry
   calc
-  Continuous TZ (ProductTopology T) f
-  _ ↔ f ⁎ TZ ∈ lowerBounds (Set.range (fun i ↦ (fun x ↦ x i) ^* (T i))) := by {
-        rw [CompleteLattice.I_isInf]
-        exact Iff.rfl
-        }
-  _ ↔ ∀ i, f ⁎ TZ ≤ (fun x ↦ x i) ^* (T i)        := by rw [lowerBounds_range]
-  _ ↔ ∀ i, (fun x ↦ x i) ⁎ (f ⁎ TZ) ≤ T i        := by {
-        apply forall_congr'
-        intro i
-        rw [pull, ← adjunction_of_Sup (fun s ↦ push_Sup _), push_push]
-        }
-  _ ↔ ∀ i,  Continuous TZ (T i) (fun z ↦ f z i)  := Iff.rfl
+    Continuous TZ (ProductTopology T) f
+    _ ↔ f ⁎ TZ ∈ lowerBounds (Set.range (fun i ↦ (fun x ↦ x i) ^* (T i))) := by {
+          rw [CompleteLattice.I_isInf]
+          exact Iff.rfl
+          }
+    _ ↔ ∀ i, f ⁎ TZ ≤ (fun x ↦ x i) ^* (T i)        := by rw [lowerBounds_range]
+    _ ↔ ∀ i, (fun x ↦ x i) ⁎ (f ⁎ TZ) ≤ T i        := by {
+          apply forall_congr'
+          intro i
+          rw [pull, ← adjunction_of_Sup (fun s ↦ push_Sup _), push_push]
+          }
+    _ ↔ ∀ i,  Continuous TZ (T i) (fun z ↦ f z i)  := Iff.rfl
   /- unfold Continuous ProductTopology
   rw [← CompleteLattice.I_isInf, lowerBounds_range]
   apply forall_congr'

@@ -182,9 +182,9 @@ at the tactic state.
 
 example (a b c d : ℝ) (h : c = b*a - d) (h' : d = a*b) : c = 0 := by {
   calc
-  c = b*a - d   := by rw [h]
-  _ = b*a - a*b := by rw [h']
-  _ = 0         := by ring
+    c = b*a - d   := by rw [h]
+    _ = b*a - a*b := by rw [h']
+    _ = 0         := by ring
 }
 
 /-
@@ -202,20 +202,20 @@ Let's do some exercises using `calc`.
 
 example (a b c : ℝ) (h : a = b + c) : exp (2 * a) = (exp b) ^ 2 * (exp c) ^ 2 := by {
   calc
-  exp (2 * a) = exp (2 * (b + c))                 := by /- inline sorry -/rw [h]/- inline sorry -/
-  _           = exp ((b + b) + (c + c))           := by /- inline sorry -/ring/- inline sorry -/
-  _           = exp (b + b) * exp (c + c)         := by /- inline sorry -/rw [exp_add]/- inline sorry -/
-  _           = (exp b * exp b) * (exp c * exp c) := by /- inline sorry -/rw [exp_add, exp_add]/- inline sorry -/
-  _           = (exp b) ^ 2 * (exp c)^2           := by /- inline sorry -/ring/- inline sorry -/
+    exp (2 * a) = exp (2 * (b + c))                 := by /- inline sorry -/rw [h]/- inline sorry -/
+    _           = exp ((b + b) + (c + c))           := by /- inline sorry -/ring/- inline sorry -/
+    _           = exp (b + b) * exp (c + c)         := by /- inline sorry -/rw [exp_add]/- inline sorry -/
+    _           = (exp b * exp b) * (exp c * exp c) := by /- inline sorry -/rw [exp_add, exp_add]/- inline sorry -/
+    _           = (exp b) ^ 2 * (exp c)^2           := by /- inline sorry -/ring/- inline sorry -/
 }
 
 
 example (a b c d : ℝ) (h : c = d*a + b) (h' : b = a*d) : c = 2*a*d := by {
   -- sorry
   calc
-  c = d*a + b   := by rw [h]
-  _ = d*a + a*d := by rw [h']
-  _ = 2*a*d     := by ring
+    c = d*a + b   := by rw [h]
+    _ = d*a + a*d := by rw [h']
+    _ = 2*a*d     := by ring
   -- sorry
 }
 

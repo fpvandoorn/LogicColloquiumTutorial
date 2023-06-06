@@ -1,16 +1,14 @@
-import Lean
-
 import Mathlib.Tactic.LibrarySearch
 import Mathlib.Tactic.Propose
 import Mathlib.Data.Real.Basic
 import Mathlib.RingTheory.Ideal.Quotient
 import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.GroupTheory.Subgroup.Basic
 
 set_option warningAsError false
-set_option linter.unnecessarySeqFocus false
-set_option linter.unreachableTactic false
-set_option linter.unusedVariables false
+-- it would be nice to do this persistently
+-- set_option linter.unnecessarySeqFocus false
+-- set_option linter.unreachableTactic false
+-- set_option linter.unusedVariables false
 
 /-
 Lemmas from that file were hidden in my course, or restating things which
@@ -111,8 +109,8 @@ Improvements to the unexpanders in `Mathlib.Order.CompleteLattice`.
 These are implemented as delaborators directly.
 -/
 
-@[delab app.supᵢ]
-def supᵢ_delab : Delab := whenPPOption Lean.getPPNotation do
+@[delab app.iSup]
+def iSup_delab : Delab := whenPPOption Lean.getPPNotation do
   let #[_, _, ι, f] := (← SubExpr.getExpr).getAppArgs | failure
   unless f.isLambda do failure
   let prop ← Meta.isProp ι

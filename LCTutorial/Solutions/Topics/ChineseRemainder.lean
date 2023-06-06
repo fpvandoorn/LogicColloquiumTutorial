@@ -1,4 +1,6 @@
 import LCTutorial.Library.Basic
+import Mathlib.RingTheory.Ideal.Quotient
+import Mathlib.RingTheory.Ideal.Operations
 
 open PiNotation BigOperators Function
 
@@ -27,7 +29,7 @@ lemma chineseMap_injective (I : ι → Ideal R) : Injective (chineseMap I) := by
   rw [chineseMap, injective_lift_iff, ker_Pi_Quotient_mk]
 }
 
-lemma coprime_infᵢ_of_coprime {I : Ideal R} {J : ι → Ideal R} {s : Finset ι} (hf : ∀ j ∈ s, I + J j = 1) :
+lemma coprime_iInf_of_coprime {I : Ideal R} {J : ι → Ideal R} {s : Finset ι} (hf : ∀ j ∈ s, I + J j = 1) :
     I + (⨅ j ∈ s, J j) = 1 := by {
   revert hf
   induction s using Finset.induction with
@@ -55,7 +57,7 @@ lemma chineseMap_surjective [Fintype ι] {I : ι → Ideal R} (hI : ∀ i j, i �
       apply hI
       simpa [ne_comm] using hj
     }
-    rcases Ideal.add_eq_one_iff.mp (coprime_infᵢ_of_coprime hI') with ⟨u, hu, e, he, hue⟩
+    rcases Ideal.add_eq_one_iff.mp (coprime_iInf_of_coprime hI') with ⟨u, hu, e, he, hue⟩
     refine ⟨e, ?_, ?_⟩
     · simp [eq_sub_of_add_eq' hue, map_sub, Ideal.Quotient.eq_zero_iff_mem.mpr hu]
       rfl
