@@ -6,7 +6,34 @@ sequences of real numbers.
 mathlib has a much more general definition of limits, but here
 we want to practice using the logical operators and relations
 covered in the previous files.
+-/
 
+/-
+Before we start on, let us make sure Lean doesn't need so much help to
+prove equalities or inequalities that linearly follow from known
+equalities and inequalities. This is the job of the linear arithmetic
+tactic: `linarith`.
+-/
+
+example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b := by linarith
+
+/-
+Let's prove some exercises using `linarith`.
+-/
+
+example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b := by {
+  -- sorry
+  linarith
+  -- sorry
+}
+
+example (a b c d : ℝ) (hab : a ≤ b) (hcd : c ≤ d) : a + c ≤ b + d := by {
+  -- sorry
+  linarith
+  -- sorry
+}
+
+/-
 A sequence `u` is a function from `ℕ` to `ℝ`, hence Lean says
 `u : ℕ → ℝ`
 The definition we'll be using is:
@@ -22,7 +49,7 @@ can be specialized to a given `ε₀` by
   `specialize h ε₀ hε₀`
 where `hε₀` is a proof of `ε₀ > 0`.
 
-Also recall that, wherever Lean expects some proof term, we can
+Also note that, wherever Lean expects some proof term, we can
 start a tactic mode proof using the keyword `by`.
 For instance, if the local context contains:
 
@@ -33,22 +60,17 @@ h : ∀ ε > 0, _
 then we can specialize h to the real number δ/2 using:
   `specialize h (δ/2) (by linarith)`
 where `by linarith` will provide the proof of `δ/2 > 0` expected by Lean.
-
-We'll take this opportunity to use two new tactics:
-
-`norm_num` will perform numerical normalization on the goal and `norm_num at h`
-will do the same in assumption `h`. This will get rid of trivial calculations on numbers
-like replacing |l - l| by zero in the next exercise.
 -/
 
--- If u is constant with value l then u tends to l
+/- If u is constant with value l then u tends to l.
+Hint: `simp` can rewrite `|1 - 1|` to `0` -/
 example (h : ∀ n, u n = l) : seq_limit u l := by {
   -- sorry
   intros ε ε_pos
   use 0
   intros n _
   rw [h]
-  norm_num
+  simp
   linarith
   -- sorry
 }

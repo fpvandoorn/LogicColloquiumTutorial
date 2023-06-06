@@ -148,8 +148,7 @@ We can also perform rewriting in an assumption of the local context, using for i
 in order to replace `exp(x + y)` by `exp(x) * exp(y)` in assumption `h`.
 
 In the example below, we use the lemmas `mul_comm x y : x * y = y * x` and `sub_self x : x - x = 0`.
-We also use the `assumption` tactic, which proves the goal if it is exactly
-the same as one of the assumptions.
+The `exact` tactic allows you to give an explicit proof term to prove the current goal.
 -/
 
 example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
@@ -157,7 +156,7 @@ example (a b c d : ℝ) (h : c = d*a - b) (h' : b = a*d) : c = 0 := by {
   rw [mul_comm d a] at h
   rw [sub_self] at h
   -- Our assumption `h` is now exactly what we have to prove
-  assumption
+  exact h
 }
 
 /- ## Calculation layout using calc
@@ -211,6 +210,6 @@ Congratulations, this is the end of your first exercise file! You've seen what t
 a Lean proof looks like and have learned about the following tactics:
 * `ring`
 * `rw`
-* `assumption`
+* `exact`
 * `calc`
 -/

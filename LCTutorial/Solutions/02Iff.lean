@@ -10,8 +10,6 @@ of `P → Q` as a function sending any proof of `P` to a proof of `Q`
 
 For instance, given a real number `a`, the lemma `sq_pos_of_pos` claims `0 < a → 0 < a^2`
 so the proof belows apply the "function" `sq_pos_of_pos` to the assumption `ha`.
-
-The `exact` tactic allows you to give an explicit proof term to prove the current goal.
 -/
 
 example (a : ℝ) (ha : 0 < a) : 0 < a^2 := by {
@@ -40,9 +38,9 @@ example (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a^2 + b^2 := by {
   -- sorry
   apply add_pos
   apply sq_pos_of_pos
-  assumption
+  exact ha
   apply sq_pos_of_pos
-  assumption
+  exact hb
   -- sorry
 }
 
@@ -60,7 +58,7 @@ After the proof is done, the statement becomes available under the name `my_name
 example (a : ℝ) (ha : 0 < a) : 0 < (a^2)^2 := by {
   have h2 : 0 < a^2      -- we declare `0 < a^2` as a subgoal
   · apply sq_pos_of_pos  -- we start proving the subgoal
-    assumption           -- this line is indented, so part of the proof of the subgoal
+    exact ha             -- this line is indented, so part of the proof of the subgoal
   exact sq_pos_of_pos h2 -- we finished the subgoal, and now we prove the main goal using it.
 }
 
@@ -217,42 +215,11 @@ example (a b : ℝ) : a = b ↔ b - a = 0 := by {
   -- sorry
 }
 
-
-/-
-Before moving on, let us make sure Lean doesn't need so much help to
-prove equalities or inequalities that linearly follow from known
-equalities and inequalities. This is the job of the linear arithmetic
-tactic: `linarith`.
--/
-
-example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b := by {
-  linarith
-}
-
-/-
-Let's enjoy this for a while.
--/
-
-example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b := by {
-  -- sorry
-  linarith
-  -- sorry
-}
-
-example (a b c d : ℝ) (hab : a ≤ b) (hcd : c ≤ d) : a + c ≤ b + d := by {
-  -- sorry
-  linarith
-  -- sorry
-}
-
 /-
 This is the end of this file where you learned how to handle implications and
 equivalences. You learned about tactics:
 * `intro`
 * `apply`
-* `exact`
 * `have`
 * `split`
-* `linarith`
-
 -/
