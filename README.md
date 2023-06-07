@@ -25,7 +25,7 @@ Lean will not actually be running on your computer, but you will connect to a ma
 
 ![Please wait](images/codespaces4.png)
 
-* The following screen will automatically load. You can hide the bottom banner by pressing the `x` at the right of your screen. Open the explorer in the top right, press `LCTutorial` and `Introduction.lean` to start.
+* The following screen will automatically load. You can hide the bottom panel by pressing the `x` at the right of your screen. Open the explorer in the top right, press `LCTutorial` and `Introduction.lean` to start.
 
 ![Start codespaces](images/codespaces5.png)
 

@@ -272,7 +272,7 @@ theorem valid_of_provable (h : Provable A) : Valid A := by {
 
   1. Define Kripke semantics and prove soundness w.r.t. Kripke semantics.
 
-  2. Prove completeness w.r.t. either Heyting algebra semantics.
+  2. Prove completeness w.r.t. either Heyting algebra semantics or Kripke semantics.
 
 -/
 
