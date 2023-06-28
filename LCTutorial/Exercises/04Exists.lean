@@ -12,7 +12,7 @@ In Lean the conjunction of two statements `P` and `Q` is denoted by `P ∧ Q`, r
 
 We can use a conjunction similarly to the `↔`:
 * If `h : P ∧ Q` then `h.1 : P` and `h.2 : Q`.
-* To prove `P ∧ Q` use the `split` tactic.
+* To prove `P ∧ Q` use the `constructor` tactic.
 
 Furthermore, we can decompose conjunction and equivalences.
 * If `h : P ∧ Q`, the tactic `rcases h with ⟨hP, hQ⟩`
@@ -24,12 +24,12 @@ Furthermore, we can decompose conjunction and equivalences.
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
   intro hpq
   rcases hpq with ⟨hp, hq⟩
-  split
+  constructor
   · exact h hp
   · exact h' hq
 }
 
-/- One can also prove a conjunction without the split tactic by gathering both sides
+/- One can also prove a conjunction without the `constructor` tactic by gathering both sides
 using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
 
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {

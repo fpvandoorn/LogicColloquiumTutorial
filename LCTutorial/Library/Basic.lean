@@ -11,51 +11,14 @@ set_option warningAsError false
 -- set_option linter.unreachableTactic false
 -- set_option linter.unusedVariables false
 
-/-
-Lemmas from that file were hidden in my course, or restating things which
-were proved without name in previous files.
--/
-
 section
 open Lean Parser Tactic
-syntax (name := suggest) "suggest" (config)? (simpArgs)? (" using " (colGt term),+)? : tactic
-
-macro_rules -- todo: third argument
-| `(tactic| suggest $[$c]? $[$s]?) => `(tactic| apply? $c ? $s ?)
 
 macro (name := ring) "ring" : tactic =>
   `(tactic| first | ring1 | ring_nf)
 
 macro (name := ring_at) "ring" cfg:config ? loc:location : tactic =>
   `(tactic| first | ring_nf $cfg ? $loc)
-
-macro (name := split) "split" : tactic =>
-  `(tactic| constructor)
-
--- fixing a current bug that clicking the suggestion on `propose using h` doesn't remove the
--- `using h`
--- syntax (name := recommend) "recommend" "!"? (" : " term)? (" using " (colGt term),+) : tactic
-
-open Elab.Tactic Elab Tactic Meta Mathlib.Tactic.Propose in
-elab_rules : tactic
-  | `(tactic| have? $[!%$lucky]? $[ : $type:term]? using $[$terms:term],*) => do
-    let goal ← getMainGoal
-    goal.withContext do
-      let required ← terms.mapM (elabTerm · none)
-      let type ← match type with
-      | some stx => elabTermWithHoles stx none (← getMainTag) true <&> (·.1)
-      | none => mkFreshTypeMVar
-      let proposals ← propose (← proposeLemmas.get) type required
-      if proposals.isEmpty then
-        throwError "propose could not find any lemmas using the given hypotheses"
-      -- TODO we should have `proposals` return a lazy list, to avoid unnecessary computation here.
-      for p in proposals.toList.take 10 do
-        addHaveSuggestion (← getRef) (← inferType p.2) p.2
-      if lucky.isSome then
-        let mut g := goal
-        for p in proposals.toList.take 10 do
-          (_, g) ← g.let p.1 p.2
-        replaceMainGoal [g]
 
 end
 

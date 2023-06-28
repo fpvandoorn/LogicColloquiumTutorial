@@ -174,7 +174,7 @@ Lean's mathematical library contains many useful facts,
 and remembering all of them my name is infeasible.
 The following exercises teach you two such techniques.
 * `simp` will simplify complicated expressions.
-* `suggest` will find lemmas from the library.
+* `apply?` will find lemmas from the library.
 -/
 
 /- Use `simp` to prove the following. Note that `X : Set ℝ`
@@ -183,7 +183,7 @@ example (x : ℝ) (X Y : Set ℝ) (hx : x ∈ X) : x ∈ (X ∩ Y) ∪ (X \ Y) :
   sorry
 }
 
-/- Use `suggest` to find the lemma that every continuous function with compact support
+/- Use `apply?` to find the lemma that every continuous function with compact support
 has a global minimum. -/
 
 example (f : ℝ → ℝ) (hf : Continuous f) (h2f : HasCompactSupport f) : ∃ x, ∀ y, f x ≤ f y := by {
@@ -196,7 +196,7 @@ You learned about tactics:
 * `unfold`
 * `specialize`
 * `simp`
-* `suggest`
+* `apply?`
 
 You now have a choice what to do next. There is one more basic file `04Exists`
 about the existential quantifier and conjunctions. You can do that now,
@@ -215,4 +215,3 @@ You can start with specialized files in the `Topics` folder. You have choice bet
   It ends with a constructor of the product topology and its universal property
   manipulating as few open sets as possible.
 -/
-

@@ -156,13 +156,13 @@ example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b := by {
 In order to prove an equivalence one can use `rw` until the
 goal is the tautology `P ↔ P`, just as one can do with equalities.
 
-One can also separately prove the two implications using the `split` tactic.
+One can also separately prove the two implications using the `constructor` tactic.
 
 Here is an example.
 -/
 
 example (a b : ℝ) : (a-b)*(a+b) = 0 ↔ a^2 = b^2 := by {
-  split
+  constructor
   · intro h
     calc
       a ^ 2 = b^2 + (a - b) * (a + b)  := by ring
@@ -187,5 +187,5 @@ equivalences. You learned about tactics:
 * `intro`
 * `apply`
 * `have`
-* `split`
+* `constructor`
 -/
