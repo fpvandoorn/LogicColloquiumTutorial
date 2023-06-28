@@ -11,10 +11,9 @@ package LCTutorial where
   moreLeanArgs := moreLeanArgs
   moreServerArgs := moreServerArgs
 
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4.git"
+
 @[default_target]
 lean_lib LCTutorial where
   moreLeanArgs := moreLeanArgs
-
-require mathlib from git
-  "https://github.com/leanprover-community/mathlib4.git" @ "master"
-

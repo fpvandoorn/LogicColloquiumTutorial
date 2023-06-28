@@ -321,9 +321,9 @@ theorem adjunction_of_Sup {l : X → Y} (h : ∀ s : Set X, l (Sup s) = Sup (l '
     }
     calc
       l x ≤ l (mk_right l y) := l_mono h'
-        _ = Sup (l '' { x | l x ≤ y }) := h {x | l x ≤ y}
-        _ ≤ Sup { y' | y' ≤ y } := Sup_subset (Set.image_preimage_subset l { y' | y' ≤ y })
-        _ = y := Sup_le_self y
+      _   = Sup (l '' { x | l x ≤ y }) := h {x | l x ≤ y}
+      _   ≤ Sup { y' | y' ≤ y } := Sup_subset (Set.image_preimage_subset l { y' | y' ≤ y })
+      _   = y := Sup_le_self y
   -- sorry
 }
 

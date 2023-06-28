@@ -3,6 +3,7 @@ import Mathlib.Tactic.Propose
 import Mathlib.Data.Real.Basic
 import Mathlib.RingTheory.Ideal.Quotient
 import Mathlib.RingTheory.Ideal.Operations
+import Mathlib.Tactic.GCongr
 
 set_option warningAsError false
 -- it would be nice to do this persistently
@@ -20,7 +21,7 @@ open Lean Parser Tactic
 syntax (name := suggest) "suggest" (config)? (simpArgs)? (" using " (colGt term),+)? : tactic
 
 macro_rules -- todo: third argument
-| `(tactic| suggest $[$c]? $[$s]?) => `(tactic| library_search $c ? $s ?)
+| `(tactic| suggest $[$c]? $[$s]?) => `(tactic| apply? $c ? $s ?)
 
 macro (name := ring) "ring" : tactic =>
   `(tactic| first | ring1 | ring_nf)
@@ -37,7 +38,7 @@ macro (name := split) "split" : tactic =>
 
 open Elab.Tactic Elab Tactic Meta Mathlib.Tactic.Propose in
 elab_rules : tactic
-  | `(tactic| propose $[!%$lucky]? $[ : $type:term]? using $[$terms:term],*) => do
+  | `(tactic| have? $[!%$lucky]? $[ : $type:term]? using $[$terms:term],*) => do
     let goal ← getMainGoal
     goal.withContext do
       let required ← terms.mapM (elabTerm · none)
