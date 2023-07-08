@@ -22,13 +22,6 @@ macro (name := ring_at) "ring" cfg:config ? loc:location : tactic =>
 
 end
 
-@[app_unexpander Function.comp] def unexpandFunctionComp : Lean.PrettyPrinter.Unexpander
-  | `($(_) $f:term $g:term $x:term) => `(($f ∘ $g) $x)
-  | _ => throw ()
-
-@[app_unexpander abs] def unexpandAbs : Lean.PrettyPrinter.Unexpander
-  | `($(_) $x) => `(|$x|)
-  | _ => throw ()
 
 namespace PiNotation
 open Lean.Parser Term
@@ -92,6 +85,9 @@ def delabPi : Delab := whenPPOption Lean.getPPNotation do
   | `(Π $group, Π $groups*, $body) => `(Π $group $groups*, $body)
   | _ => pure stx
 
+-- the above delaborator and parser are still needed:
+-- #check Π (x : Nat), Vector Bool x
+
 end PiNotation
 
 section SupInfNotation
@@ -102,7 +98,6 @@ Improvements to the unexpanders in `Mathlib.Order.CompleteLattice`.
 
 These are implemented as delaborators directly.
 -/
-
 @[delab app.iSup]
 def iSup_delab : Delab := whenPPOption Lean.getPPNotation do
   let #[_, _, ι, f] := (← SubExpr.getExpr).getAppArgs | failure
@@ -200,6 +195,10 @@ def exists_delab : Delab := whenPPOption Lean.getPPNotation do
   | `(∃ $group:bracketedExplicitBinders, ∃ $groups*, $body) => `(∃ $group $groups*, $body)
   | _ => pure stx
 
+-- the above delaborators are still needed:
+-- #check ⨆ (i : Nat) (_ : i ∈ Set.univ), (i = i)
+-- #check ∃ (i : Nat), i ≥ 3 ∧ i = i
+
 end SupInfNotation
 
 section UnionInterNotation
@@ -264,6 +263,9 @@ def interᵢ_delab : Delab := whenPPOption Lean.getPPNotation do
       if x == y then `(⋂ $x:ident ∈ $s, $body) else pure stx
     | _ => pure stx
   return stx
+
+-- the above delaborators might not work correctly
+-- #check ⋃ (s : Set ℕ) (_ : s ∈ Set.univ), s
 
 end UnionInterNotation
 

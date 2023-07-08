@@ -114,6 +114,7 @@ example (hu : seq_limit u l) (hv : seq_limit v l') :
   · exact hN₁ n (by linarith)
   have fact₂ : |v n - l'| ≤ ε/2
   · exact hN₂ n (by linarith)
+  
   calc
     |(u + v) n - (l + l')| = |u n + v n - (l + l')|   := rfl
     _ = |(u n - l) + (v n - l')|                      := by ring

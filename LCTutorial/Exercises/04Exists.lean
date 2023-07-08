@@ -29,7 +29,7 @@ example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := b
   · exact h' hq
 }
 
-/- One can also prove a conjunction without the `constructor` tactic by gathering both sides
+/- One can also prove a conjunction without the constructor tactic by gathering both sides
 using the `⟨`/`⟩` brackets, so the above proof can be rewritten as. -/
 
 example (p q r s : Prop) (h : p → r) (h' : q → s) : p ∧ q → r ∧ s := by {
