@@ -6,4 +6,5 @@ import LCTutorial.Solutions.«04Exists»
 import LCTutorial.Solutions.Topics.SequenceLimits
 import LCTutorial.Solutions.Topics.ChineseRemainder
 import LCTutorial.Solutions.Topics.GaloisAdjunctions
-
+import LCTutorial.Solutions.Topics.ClassicalPropositionalLogic
+import LCTutorial.Solutions.Topics.IntuitionisticPropositionalLogic

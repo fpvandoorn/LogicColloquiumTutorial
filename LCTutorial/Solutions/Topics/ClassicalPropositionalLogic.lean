@@ -1,7 +1,7 @@
 import LCTutorial.Library.Basic
 open Set
 
-namespace PropositionalLogic
+namespace ClassicalPropositionalLogic
 
 /- Let's try to implement a language of classical propositional logic.
 
@@ -286,4 +286,4 @@ theorem valid_of_provable (h : Provable A) : Valid A := by {
   to the same provability.
 -/
 
-end PropositionalLogic
+end ClassicalPropositionalLogic

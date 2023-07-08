@@ -1,7 +1,7 @@
 import LCTutorial.Library.Basic
 open Set
 
-namespace PropositionalLogic
+namespace IntuitionisticPropositionalLogic
 
 /- Let's try to implement a language of intuitionistic propositional logic.
 
@@ -183,4 +183,4 @@ theorem valid_of_provable (h : Provable A) : Valid A := by {
 
 -/
 
-end PropositionalLogic
+end IntuitionisticPropositionalLogic
